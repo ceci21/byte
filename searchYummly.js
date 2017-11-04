@@ -19,6 +19,7 @@ var searchYummly = (options, callback) => {
       );
     })
 }
+//here is a comment
 
 window.searchYummly = searchYummly;
 
