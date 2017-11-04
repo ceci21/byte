@@ -20,6 +20,7 @@ var searchYummly = (options, callback) => {
     })
 }
 //here is a comment
+//git pull upstream master --rebase
 
 window.searchYummly = searchYummly;
 
