@@ -3,12 +3,12 @@ var mysql = require('mysql');
 var connection = mysql.createConnection({
   host     : 'localhost',
   user     : 'root',
-  password : '',
-  database : 'test'
+  password : 'password',
+  database : 'pantry'
 });
 
-var selectAll = function(callback) {
-  connection.query('SELECT * FROM items', function(err, results, fields) {
+var getUsers = function(callback) {
+  connection.query('SELECT * FROM users', function(err, results, fields) {
     if(err) {
       callback(err, null);
     } else {
@@ -17,4 +17,26 @@ var selectAll = function(callback) {
   });
 };
 
-module.exports.selectAll = selectAll;
+var getRecipes = function(callback) {
+  connection.query('SELECT * FROM recipes', function(err, results, fields) {
+    if(err) {
+      callback(err, null);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
+var getUsersRecipes = function(callback) {
+  connection.query('SELECT * FROM users_recipes', function(err, results, fields) {
+    if (err) {
+      callback(err, null);
+    } else {
+      callback(null, results);
+    }
+  });
+};
+
+module.exports.getUsers = getUsers;
+module.exports.getRecipes = getRecipes;
+module.exports.getUsersRecipes = getUsersRecipes;

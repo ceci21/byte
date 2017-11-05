@@ -26,8 +26,6 @@
 ## Requirements
 
 - Node 0.10.x
-- Redis 2.6.x
-- Postgresql 9.1.x
 - etc
 - etc
 
@@ -38,9 +36,9 @@
 From within the root directory:
 
 ```sh
-sudo npm install -g bower
 npm install
-bower install
+sudo apt-get install mysql-client
+sudo apt-get install mysql-server
 ```
 
 ### Roadmap

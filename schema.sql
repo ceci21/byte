@@ -1,25 +1,69 @@
-DROP DATABASE IF EXISTS test;
+DROP DATABASE IF EXISTS pantry;
 
-CREATE DATABASE test;
+CREATE DATABASE pantry;
 
-USE test;
-
--- CREATE TABLE items (
---   id int NOT NULL AUTO_INCREMENT,
---   quantity integer NOT NULL,
---   description varchar(50) NOT NULL,
---   PRIMARY KEY (ID)
--- );
+USE pantry;
 
 CREATE TABLE users (
-  id int NOT NULL AUTO_INCREMENT,
-  name text NOT NULL,
-  password text NOT NULL
+  id INT NOT NULL AUTO_INCREMENT,
+  name TEXT NOT NULL,
+  password TEXT NOT NULL,
+  PRIMARY KEY(id)
 );
 
 CREATE TABLE recipes (
-  id int NOT NULL AUTO_INCREMENT
+  id INT NOT NULL AUTO_INCREMENT,
+  recipe JSON NOT NULL,
+  PRIMARY KEY(id)
 );
+
+CREATE TABLE users_recipes (
+  id INT NOT NULL AUTO_INCREMENT,
+  user_id INT NOT NULL,
+  recipe_id INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  FOREIGN KEY (recipe_id) REFERENCES recipes(id)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  PRIMARY KEY(id)
+);
+
+/* TEST DATA */
+
+INSERT INTO users (name, password)
+VALUES ('joshawesome12', 'butter98');
+
+INSERT INTO users (name, password)
+VALUES ('Ghostcoder8', 'h@xx');
+
+
+INSERT INTO recipes (recipe)
+VALUES (
+  '{
+  "name": "soup",
+  "ingredients": ["chicken", "broth", "noodles"]
+  }'
+);
+
+INSERT INTO recipes (recipe)
+VALUES (
+  '{
+  "name": "chicken",
+  "ingredients": ["chicken breast", "oil", "salt"]
+  }'
+);
+
+INSERT INTO users_recipes (recipe_id, user_id)
+VALUES (2, 1);
+
+INSERT INTO users_recipes (recipe_id, user_id)
+VALUES (2, 2);
+
 /*  Execute this file from the command line by typing:
- *    mysql -u root < server/schema.sql
- *  to create the database and the tables.*/
+ *    mysql -u root -p < server/schema.sql
+ *  to create the database and the tables.
+ *
+ *  To make queries to the database using the terminal, type:
+ *    mysql -u root -p */
