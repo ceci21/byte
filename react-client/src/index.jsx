@@ -4,22 +4,29 @@ import $ from 'jquery';
 import Search from './components/Search.jsx';
 import RecipeList from './components/RecipeList.jsx';
 import _Test from './_Test.jsx'; /* Feel free to remove me! */
-import searchYummly from './lib/searchYummly.js';
+import {searchYummly} from './lib/searchYummly.js';
 
 class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      items: []
+      items: [],
+      query: ''
     }
-    //this.onClickHandler = this.onClickHandler.bind(this);
+    this.onClickHandler = this.onClickHandler.bind(this);
+    this.setStore = this.setStore.bind(this);
+  }
+
+  setStore(state) {
+    console.log('SET STORE');
+    this.setState(state)
   }
 
   componentDidMount() {
     $.ajax({
       url: '/users',
       success: (data) => {
-        this.setState({ 
+        this.setState({
           items: data
         })
       },
@@ -29,20 +36,23 @@ class App extends React.Component {
     });
   }
 
-  onClickHandler() {
-    searchYummly(null, (data) => {
+  onClickHandler(e) {
+    console.log('CLICKED');
+    console.log('EVENT: ', e.target);
+    console.log('USER INPUT', e.target.value);
+    // this.setState({
+    //   query: e.target.value
+    // })
+    console.log('QUERY STATE: ', this.state.query);
+    searchYummly(['butter', 'honey'], (data) => {
       console.log('API Data: ', data);
     });
   }
 
   render () {
     return (<div>
-      <input type="text" onChange={(event) => {this.setState({query: event.target.value})}}></input>
-      <button onClick={(event) => {
-        this.onClickHandler();
-      }}>API Test</button>
       <h1>User List</h1>
-      <Search />
+      <Search clickHandler={this.onClickHandler} setStore={this.setStore}/>
       <RecipeList items={this.state.items} />
       <_Test /> {/*Feel free to remove me!*/}
     </div>)
