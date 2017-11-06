@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import List from './components/List.jsx';
+import Search from './components/Search.jsx';
+import RecipeList from './components/RecipeList.jsx';
 import _Test from './_Test.jsx'; /* Feel free to remove me! */
 import searchYummly from './lib/searchYummly.js';
 
@@ -18,7 +19,7 @@ class App extends React.Component {
     $.ajax({
       url: '/users',
       success: (data) => {
-        this.setState({
+        this.setState({ 
           items: data
         })
       },
@@ -41,7 +42,8 @@ class App extends React.Component {
         this.onClickHandler();
       }}>API Test</button>
       <h1>User List</h1>
-      <List items={this.state.items} />
+      <Search />
+      <RecipeList items={this.state.items} />
       <_Test /> {/*Feel free to remove me!*/}
     </div>)
   }
