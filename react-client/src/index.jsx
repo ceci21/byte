@@ -1,8 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import List from './components/List.jsx';
 import RecipeList_Test from './components/RecipeList_Test.jsx';
+import Search from './components/Search.jsx';
+import RecipeList from './components/RecipeList.jsx';
 import _Test from './_Test.jsx'; /* Feel free to remove me! */
 import searchYummly from './lib/searchYummly.js';
 import SAMPLE_DATA from './data/SAMPLE_DATA.js';
@@ -43,7 +44,8 @@ class App extends React.Component {
       }}>API Test</button>
       <RecipeList_Test data={SAMPLE_DATA}/>
       <h1>User List</h1>
-      {/* <List items={this.state.items} /> */}
+      <Search />
+      <RecipeList items={this.state.items} />
       <_Test /> {/*Feel free to remove me!*/}
     </div>)
   }
