@@ -59,7 +59,9 @@ INSERT INTO users_recipes (recipe_id, user_id)
 VALUES (2, 1);
 
 INSERT INTO users_recipes (recipe_id, user_id)
-VALUES (2, 2);
+VALUES (1, 1);
+
+
 
 /*  Execute this file from the command line by typing:
  *    mysql -u root -p < server/schema.sql

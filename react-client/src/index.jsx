@@ -2,6 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import List from './components/List.jsx';
+import _Test from './_Test.jsx'; /* Feel free to remove me! */
 
 class App extends React.Component {
   constructor(props) {
@@ -15,10 +16,9 @@ class App extends React.Component {
     $.ajax({
       url: '/users',
       success: (data) => {
-        console.log(data);
-        // this.setState({
-        //   items: data
-        // })
+        this.setState({
+          items: data
+        })
       },
       error: (err) => {
         console.log('err', err);
@@ -28,8 +28,9 @@ class App extends React.Component {
 
   render () {
     return (<div>
-      <h1>Item List</h1>
-      <List items={this.state.items}/>
+      <h1>User List</h1>
+      <List items={this.state.items} />
+      <_Test /> {/*Feel free to remove me!*}
     </div>)
   }
 }
