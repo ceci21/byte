@@ -36,16 +36,21 @@ export default class _Test extends React.Component {
     }}>Users</button>
     <button onClick={(event) => {
       console.log(this);
-      this.buttonAction('/recipes')
+      this.buttonAction('/recipes');
     }}>Recipes</button>
     <button onClick={(event) => {
-      this.buttonAction('/users_recipes')
+      this.buttonAction('/users_recipes');
     }}>Users/Recipes</button></div>
     return buttons;
   }
 
 
   render() {
-      return <div>{this.getButtons()}<h1>{this.state.stuff}</h1></div>;
+      return <div style={{border: 'solid red 2px'}}>
+        <h2>FOR TESTING PURPOSES.</h2>
+        <p>Please feel free to remove _Test component from index.jsx when you are ready.</p>
+        <div>{this.getButtons()}</div>
+        <h1>{this.state.stuff}</h1>
+      </div>;
   }
 }

@@ -37,8 +37,6 @@ From within the root directory:
 
 ```sh
 npm install
-sudo apt-get install mysql-client
-sudo apt-get install mysql-server
 ```
 
 ### Roadmap

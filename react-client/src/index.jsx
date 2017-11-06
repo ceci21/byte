@@ -30,7 +30,7 @@ class App extends React.Component {
     return (<div>
       <h1>User List</h1>
       <List items={this.state.items} />
-      <_Test /> {/*Feel free to remove me!*}
+      <_Test /> {/*Feel free to remove me!*/}
     </div>)
   }
 }
