@@ -22,7 +22,8 @@ coverage
 build/
 
 # Yummly API Key
-src/config/yummly.js
+react-client/src/config/yummly.js
+react-client/src/lib/searchYummly.js
 
 # Dependency directorys
 # Deployed apps should consider commenting these lines out:

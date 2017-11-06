@@ -39,6 +39,28 @@ From within the root directory:
 npm install
 ```
 
+### Running webpack and server
+
+```sh
+npm run react-dev
+npm run server-dev
+```
+
+### Recreating schema
+
+To recreate schema that sets the database and its tables, run the following:
+
+```sh
+mysql -u root -p < schema.sql
+```
+
+To make SQL queries within the database, run:
+``` sh
+mysql -u root -p
+```
+
+Password is 'password'
+
 ### Roadmap
 
 View the project roadmap [here](LINK_TO_PROJECT_ISSUES)
