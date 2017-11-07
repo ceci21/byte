@@ -46,9 +46,49 @@ class App extends React.Component {
     e.preventDefault();
     console.log('QUERY STATE: ', this.state.query);
     var options = {};
-    options.ingredients = this.state.query.split(", ")
+    options.ingredients = this.state.query.split(", ");
+    var queryArray = options.ingredients;
+    console.log('Query Array', queryArray);
     searchYummly(options, (matches) => {
-      console.log('API Data: ', matches);
+      var resultsArray = [];
+      console.log('API Data Matches Length: ', matches.length);
+      console.log('API Data Matches Length: ', matches);
+
+      for (var i = 0; i < matches.length; i++) {
+        
+        var currentMatchIngredientsArray = matches[i].ingredients;
+        console.log('INGREDIENTS for', currentMatchIngredientsArray);
+
+        if (currentMatchIngredientsArray.length > queryArray.length) {
+          console.log('FALSE');
+          //matches.splice
+          //return 'FALSE';
+        }
+
+        for (var j = 0; j < currentMatchIngredientsArray.length; j++) {
+
+            var currentIngredientMashed = currentMatchIngredientsArray[j].split(' ').join('');
+            var isFound = false;
+            for (var k = 0; k < queryArray.length; k++) {
+              var queryIngredientMashed = queryArray[k].split(' ').join('');
+              if (currentIngredientMashed.includes(queryIngredientMashed)) {
+                isFound = true;
+                break;
+              }
+            }
+
+            if (!isFound) {
+              console.log('FALSE');
+              //return false;
+            }
+        }
+
+
+      }
+
+
+
+
       this.setState({data: matches});
     });
   }
