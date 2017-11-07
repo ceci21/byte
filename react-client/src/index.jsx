@@ -15,7 +15,8 @@ class App extends React.Component {
     super(props);
     this.state = {
       items: [],
-      query: ''
+      query: '',
+      data: SAMPLE_DATA
     }
 
     this.onClickHandler = this.onClickHandler.bind(this);
@@ -42,20 +43,25 @@ class App extends React.Component {
   }
 
   onClickHandler(e) {
-    console.log('CLICKED');
-    console.log('EVENT: ', e.target);
-    console.log('USER INPUT', e.target.value);
-    // this.setState({
-    //   query: e.target.value
-    // })
+    e.preventDefault();
     console.log('QUERY STATE: ', this.state.query);
-    searchYummly(['butter', 'honey'], (data) => {
-      console.log('API Data: ', data);
+    var options = {};
+    options.ingredients = this.state.query.split(", ")
+    searchYummly(options, (matches) => {
+      console.log('API Data: ', matches);
+      this.setState({data: matches});
     });
   }
 
   bootstrapView() {
-    return <div><NavBar /><Jumbotron><h1>Hello world!</h1></Jumbotron></div>
+    return <div className="container">
+      <NavBar />
+      <Jumbotron>
+        <h1>Hello world!</h1>
+      </Jumbotron>
+      <Search clickHandler={this.onClickHandler} setStore={this.setStore}/>
+      <RecipeList_Test data={this.state.data} />
+    </div>
   }
 
   testComponents() {
