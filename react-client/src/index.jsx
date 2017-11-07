@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
+import RecipeList_Test from './components/RecipeList_Test.jsx';
 import Search from './components/Search.jsx';
 import RecipeList from './components/RecipeList.jsx';
 import _Test from './_Test.jsx'; /* Feel free to remove me! */
 import {searchYummly} from './lib/searchYummly.js';
+import SAMPLE_DATA from './data/SAMPLE_DATA.js';
 
 class App extends React.Component {
   constructor(props) {
@@ -13,6 +15,7 @@ class App extends React.Component {
       items: [],
       query: ''
     }
+
     this.onClickHandler = this.onClickHandler.bind(this);
     this.setStore = this.setStore.bind(this);
   }
@@ -51,6 +54,11 @@ class App extends React.Component {
 
   render () {
     return (<div>
+      <input type="text" onChange={(event) => {this.setState({query: event.target.value})}}></input>
+      <button onClick={(event) => {
+        this.onClickHandler();
+      }}>API Test</button>
+      <RecipeList_Test data={SAMPLE_DATA}/>
       <h1>User List</h1>
       <Search clickHandler={this.onClickHandler} setStore={this.setStore}/>
       <RecipeList items={this.state.items} />
