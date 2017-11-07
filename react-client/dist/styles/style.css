@@ -4,11 +4,23 @@ body {
 }
 
 .recipe-list {
-  max-width: 750px;
+  max-width: 100%;
 }
 
 .recipe-entry {
+  text-align: center;
+  border: 1px red solid;
+  padding: 2em;
   display: inline-block;
-  width: 250px;
-  height: 250px;
+  width: 33%;
+  height: 33%;
+  float: top;
+}
+
+.search {
+  text-align: center;
+  padding: 3em;
+}
+
+.container {
 }

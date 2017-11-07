@@ -3,17 +3,14 @@ import $ from 'jquery';
 var searchYummly = (options, callback) => {
   $.get('http://api.yummly.com/v1/api/recipes?_app_id=6dc42c37&_app_key=4c35e386c8a9c936f0c5c16e72eb841a',
     {
-
-      q: 'peanut butter, jelly',
+      q: '',
       allowedIngredient: options.ingredients,
       maxResult: 6,
       excludedIngredient: '*'
       // facetField: ['jelly']
-
-
     })
     .done((data) => {
-        callback(data);
+        callback(data.matches);
       }
     )
     .fail( function(error){

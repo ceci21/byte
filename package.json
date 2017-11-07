@@ -19,12 +19,14 @@
   "dependencies": {
     "bcrypt": "^1.0.3",
     "body-parser": "^1.17.2",
+    "bootstrap-3-card": "^0.2.0",
     "express": "^4.15.0",
     "express-session": "^1.15.6",
     "jquery": "^3.1.1",
     "mysql": "^2.15.0",
-    "react": "^15.4.2",
+    "react": "^15.6.2",
     "react-bootstrap": "^0.31.5",
-    "react-dom": "^15.4.2"
+    "react-dom": "^15.6.2",
+    "reactstrap": "^5.0.0-alpha.3"
   }
 }
