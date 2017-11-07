@@ -10,6 +10,7 @@ import SAMPLE_DATA from './data/SAMPLE_DATA.js';
 import { Jumbotron } from 'react-bootstrap';
 import NavBar from './components/NavBar.jsx';
 
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -30,11 +31,9 @@ class App extends React.Component {
 
   componentDidMount() {
     $.ajax({
-      url: '/users',
+      url: '/users_recipes',
       success: (data) => {
-        this.setState({
-          items: data
-        })
+        console.log('WHAT: ', data);
       },
       error: (err) => {
         console.log('err', err);
