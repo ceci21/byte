@@ -9,6 +9,7 @@ import {searchYummly} from './lib/searchYummly.js';
 import SAMPLE_DATA from './data/SAMPLE_DATA.js';
 import { Jumbotron } from 'react-bootstrap';
 import NavBar from './components/NavBar.jsx';
+import { Parallax } from 'react-parallax';
 
 class App extends React.Component {
   constructor(props) {
@@ -46,7 +47,7 @@ class App extends React.Component {
     e.preventDefault();
     console.log('QUERY STATE: ', this.state.query);
     var options = {};
-    options.ingredients = this.state.query.split(", ")
+    options.ingredients = this.state.query.split(",")
     searchYummly(options, (matches) => {
       console.log('API Data: ', matches);
       this.setState({data: matches});
@@ -54,14 +55,19 @@ class App extends React.Component {
   }
 
   bootstrapView() {
-    return <div className="container">
+    return (
+    <div>
       <NavBar />
-      <Jumbotron>
-        <h1>Hello world!</h1>
-      </Jumbotron>
-      <Search clickHandler={this.onClickHandler} setStore={this.setStore}/>
-      <RecipeList_Test data={this.state.data} />
-    </div>
+      <Parallax className="main-card" bgImage="https://closetslasvegas.com/wp-content/uploads/2017/06/freedomrail-pantry-dsc6177web3434.jpg" strength={400}>
+        <div className="flexspace"/>
+        <h1 className="subtitle">Byte!</h1>
+        <div className="flexspace"/>
+      </Parallax>
+      <div className="container">
+        <Search clickHandler={this.onClickHandler} setStore={this.setStore}/>
+        <RecipeList_Test data={this.state.data} />
+      </div>
+    </div>);
   }
 
   testComponents() {
