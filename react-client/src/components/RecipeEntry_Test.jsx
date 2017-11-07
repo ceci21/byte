@@ -2,6 +2,7 @@ import React from 'react';
 import { Card, Button, CardImg, CardTitle, CardText, CardGroup,
  CardSubtitle, CardBody } from 'reactstrap';
  import { Parallax } from 'react-parallax';
+ import TiHeartFullOutline from 'react-icons/lib/ti/heart-full-outline';
 
 const RecipeEntry_Test = (props) => {
   // Create new image link with higher resolution
@@ -10,8 +11,8 @@ const RecipeEntry_Test = (props) => {
   imgLink = imgLink.slice(0, imgSizePropertyIndex) + "=s1080-c";
   
   // Limit title to 25 characters
-  if (props.data.recipeName.length > 32) {
-    var title = props.data.recipeName.slice(0, 32) + "...";
+  if (props.data.recipeName.length > 19) {
+    var title = props.data.recipeName.slice(0, 19) + "...";
   } else {
     title = props.data.recipeName;
   }
@@ -30,13 +31,19 @@ const RecipeEntry_Test = (props) => {
         <Card>
           <Parallax className="recipe-image img-hover" bgImage={imgLink} strength={100}></Parallax>
           <CardBody>
-            <CardTitle>{title}</CardTitle>
-            <CardText>{ingredientsArray.map((element, index) => {
+            <CardTitle className="recipe-title">{title}</CardTitle>
+            <CardText className="recipe-ingredients">{ingredientsArray.map((element, index) => {
               if (index < 3) {
                 return <li>{element}</li>
               }
             })}</CardText>
-            <Button>Favorite</Button>
+            <div className="center">
+              <a href="google.com">
+                <span className="recipe-favorite">
+                  <TiHeartFullOutline />
+                </span>
+              </a>
+            </div>
           </CardBody>
         </Card>
       </CardGroup>
