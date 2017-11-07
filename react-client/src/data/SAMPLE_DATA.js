@@ -5,7 +5,7 @@ var SAMPLE_DATA = [
     "description": "Delicious burger"
   },
   {
-    "title": "My Good Ol' Salad",
+    "title": "Good Salad",
     "img": "http://del.h-cdn.co/assets/17/26/980x490/landscape-1498859760-chinese-chicken-salad-1.jpg",
     "description": "I hate salad."
   },

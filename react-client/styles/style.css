@@ -1,9 +1,0 @@
-body {
-  font-size: 16px;
-  background-color: lightgrey;
-}
-
-.recipe-entry {
-  border: 2px blue solid;
-  display: inline-block
-}
