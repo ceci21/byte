@@ -7,6 +7,8 @@ import RecipeList from './components/RecipeList.jsx';
 import _Test from './_Test.jsx'; /* Feel free to remove me! */
 import searchYummly from './lib/searchYummly.js';
 import SAMPLE_DATA from './data/SAMPLE_DATA.js';
+import { Jumbotron } from 'react-bootstrap';
+import NavBar from './components/NavBar.jsx';
 
 class App extends React.Component {
   constructor(props) {
@@ -36,7 +38,11 @@ class App extends React.Component {
     });
   }
 
-  render () {
+  bootstrapView() {
+    return <div><NavBar /><Jumbotron><h1>Hello world!</h1></Jumbotron></div>
+  }
+
+  testComponents() {
     return (<div>
       <input type="text" onChange={(event) => {this.setState({query: event.target.value})}}></input>
       <button onClick={(event) => {
@@ -47,7 +53,11 @@ class App extends React.Component {
       <Search />
       <RecipeList items={this.state.items} />
       <_Test /> {/*Feel free to remove me!*/}
-    </div>)
+    </div>);
+  }
+
+  render () {
+    return <div>{this.bootstrapView()}</div>
   }
 }
 

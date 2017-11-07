@@ -1,0 +1,14 @@
+body {
+  font-size: 16px;
+  background-color: white;
+}
+
+.recipe-list {
+  max-width: 750px;
+}
+
+.recipe-entry {
+  display: inline-block;
+  width: 250px;
+  height: 250px;
+}

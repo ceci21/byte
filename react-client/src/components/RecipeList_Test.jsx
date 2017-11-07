@@ -1,5 +1,5 @@
 import React from 'react';
-import RecipeRow_Test from './RecipeRow_Test.jsx';
+import RecipeEntry_Test from './RecipeEntry_Test.jsx';
 
 export default class RecipeList_Test extends React.Component {
   constructor(props) {
@@ -9,13 +9,13 @@ export default class RecipeList_Test extends React.Component {
 
   createRecipeTable() {
     var table = [];
-    for (var n = 0; n <= Math.floor(this.props.data.length / 3); n++) {
-      table.push(<RecipeRow_Test data={this.props.data} row={n} />)
+    for (var n = 0; n < this.props.data.length; n++) {
+      table.push(<RecipeEntry_Test id={n} data={this.props.data[n]} />);
     }
     return table;
   }
 
   render() {
-    return <div style={{"border": "2px solid pink"}}><table className="recipe-list"><tbody>{this.createRecipeTable()}</tbody></table></div>
+    return <div className="recipe-list">{this.createRecipeTable()}</div>
   }
 }
