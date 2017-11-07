@@ -5,7 +5,7 @@ var searchYummly = (options, callback) => {
     {
       q: '',
       allowedIngredient: options.ingredients,
-      maxResult: 9,
+      maxResult: 100,
       excludedIngredient: '*'
       // facetField: ['jelly']
     })
