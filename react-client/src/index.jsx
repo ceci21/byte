@@ -57,7 +57,7 @@ class App extends React.Component {
       console.log('API Data Matches Length: ', matches);
 
       for (var i = 0; i < matches.length; i++) {
-        
+
         var currentMatchIngredientsArray = matches[i].ingredients;
         console.log('INGREDIENTS for', currentMatchIngredientsArray);
 
@@ -86,11 +86,11 @@ class App extends React.Component {
               }
             }
             //if the current ingredient is not found in the query ingredient list, then we do not include
-            //in our results array and we break out of this for loop and go on to next match 
+            //in our results array and we break out of this for loop and go on to next match
             if (!isFound) {
               isMatch = false;
               break;
-            } 
+            }
         }
         //push to results array if every single ingredient can be found in query ingredient list
         if (isMatch) {
@@ -99,14 +99,9 @@ class App extends React.Component {
         } else {
           console.log('Not a match');
         }
-        
-
       }
-
-      console.log('RESULTS ARRAY', resultsArray);
-      console.log('MATCHES ARRAY', matches);
-      this.setState({data: resultsArray});
-     // this.setState({data: matches});
+      // this.setState({data: resultsArray});
+     this.setState({data: matches});
     });
   }
 
