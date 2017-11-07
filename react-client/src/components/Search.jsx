@@ -2,6 +2,7 @@ import React from 'react';
 import RecipeListItem from './RecipeListItem.jsx';
 import ReactDOM from 'react-dom';
 import { WithContext as ReactTags } from 'react-tag-input';
+import { InputGroup, FormControl, Button } from 'react-bootstrap';
 
 const Search = (props) => (
   <div className="search">
@@ -12,8 +13,8 @@ const Search = (props) => (
       handleDelete={null}
       handleAddition={null}
       handleDrag={null}/> */}
-    <input className="search-input" type="text" onChange={(e) => {props.setStore({query: e.target.value})}} />
-     <button inverse className="search-button" onClick={props.clickHandler}>Search</button>
+        <FormControl type="text" className="search-input" type="text" onChange={(e) => {props.setStore({query: e.target.value})}} />
+        <Button inverse className="search-button" onClick={props.clickHandler}>Search</Button>
    </form>
   </div>
 )
