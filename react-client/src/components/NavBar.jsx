@@ -5,7 +5,7 @@ const NavBar = (props) => {
   return (<div><Navbar fixedTop inverse collapseOnSelect>
     <Navbar.Header>
       <Navbar.Brand>
-        <a href="#">React-Bootstrap</a>
+        <a href="#" className="title">Byte!</a>
       </Navbar.Brand>
       <Navbar.Toggle />
     </Navbar.Header>

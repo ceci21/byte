@@ -58,10 +58,10 @@ class App extends React.Component {
     return (
     <div>
       <NavBar />
-      <Parallax className="main-card" bgImage="https://closetslasvegas.com/wp-content/uploads/2017/06/freedomrail-pantry-dsc6177web3434.jpg" strength={400}>
-        <div className="flexspace"/>
-        <h1 className="subtitle">Byte!</h1>
-        <div className="flexspace"/>
+      <Parallax className="main-card" bgImage="http://chicago-woman.com/downloads/4988/download/Pantry%20Essentails-%20High%20Res.jpeg?cb=e59f0a5326ccffaeddcad2f813efb9ad" strength={400}>
+        <div>
+          <h1 className="subtitle"><br/>Why run to the grocery store when you have all the ingredients you need at home? Here at Byte, we help you see the potential of your pantry.</h1>
+        </div>
       </Parallax>
       <div className="container">
         <Search clickHandler={this.onClickHandler} setStore={this.setStore}/>
