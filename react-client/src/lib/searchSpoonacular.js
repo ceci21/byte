@@ -18,11 +18,7 @@ var searchSpoonacular = function(options, callback) {
        },
        headers: {'X-Mashape-Key': apiKey},
        success: function(data) {
-         for (var n = 0; n < data.results.length; n++) {
-           console.log('Used ingredients: ', data.results[n].usedIngredientCount);
-           console.log('Missed ingredients: ', data.results[n].missedIngredientCount);
-           console.log('----');
-         }
+         console.log('Data: ', data);
          callback(data);
        },
        error: function(err) {
