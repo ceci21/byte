@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import RecipeList_Test from './components/RecipeList_Test.jsx';
-import Search from './components/Search.jsx';
 import RecipeList from './components/RecipeList.jsx';
+import Search from './components/Search.jsx';
 import _Test from './_Test.jsx'; /* Feel free to remove me! */
 import {searchYummly} from './lib/searchYummly.js';
 import SAMPLE_DATA from './data/SAMPLE_DATA.js';
@@ -18,7 +17,8 @@ class App extends React.Component {
     this.state = {
       items: [],
       query: '',
-      data: SAMPLE_DATA
+      data: SAMPLE_DATA,
+      searchMode: "Loose"
     }
 
     this.onClickHandler = this.onClickHandler.bind(this);
@@ -57,7 +57,7 @@ class App extends React.Component {
       console.log('API Data Matches Length: ', matches);
 
       for (var i = 0; i < matches.length; i++) {
-        
+
         var currentMatchIngredientsArray = matches[i].ingredients;
         console.log('INGREDIENTS for', currentMatchIngredientsArray);
 
@@ -86,11 +86,11 @@ class App extends React.Component {
               }
             }
             //if the current ingredient is not found in the query ingredient list, then we do not include
-            //in our results array and we break out of this for loop and go on to next match 
+            //in our results array and we break out of this for loop and go on to next match
             if (!isFound) {
               isMatch = false;
               break;
-            } 
+            }
         }
         //push to results array if every single ingredient can be found in query ingredient list
         if (isMatch) {
@@ -99,14 +99,17 @@ class App extends React.Component {
         } else {
           console.log('Not a match');
         }
-        
+
 
       }
 
       console.log('RESULTS ARRAY', resultsArray);
       console.log('MATCHES ARRAY', matches);
-      this.setState({data: resultsArray});
-     // this.setState({data: matches});
+      if (this.state.searchMode === "Strict") {
+        this.setState({data: resultsArray});
+      } else if (this.state.searchMode === "Loose") {
+        this.setState({data: matches});
+      }
     });
   }
 
@@ -120,8 +123,8 @@ class App extends React.Component {
         </div>
       </Parallax>
       <div className="container">
-        <Search clickHandler={this.onClickHandler} setStore={this.setStore}/>
-        <RecipeList_Test data={this.state.data} />
+        <Search clickHandler={this.onClickHandler} setStore={this.setStore} appState={this.state}/>
+        <RecipeList data={this.state.data} />
       </div>
     </div>);
   }
@@ -132,7 +135,7 @@ class App extends React.Component {
       <button onClick={(event) => {
         this.onClickHandler();
       }}>API Test</button>
-      <RecipeList_Test data={SAMPLE_DATA}/>
+      <RecipeList data={SAMPLE_DATA}/>
       <h1>User List</h1>
       <Search clickHandler={this.onClickHandler} setStore={this.setStore}/>
       <RecipeList items={this.state.items} />
