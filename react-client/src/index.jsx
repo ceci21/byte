@@ -10,7 +10,9 @@ import SAMPLE_DATA from './data/SAMPLE_DATA.js';
 import { Jumbotron } from 'react-bootstrap';
 import NavBar from './components/NavBar.jsx';
 import { Parallax } from 'react-parallax';
+import LoginSubmissionForm from './components/LoginSubmissionForm.jsx';
 
+const SERVER_URL = "http://127.0.0.1:3000";
 
 class App extends React.Component {
   constructor(props) {
@@ -19,17 +21,16 @@ class App extends React.Component {
       items: [],
       query: '',
       data: SAMPLE_DATA,
-      searchMode: "Loose"
+      searchMode: "Loose",
+      username: null,
+      loggedIn: false
     }
 
-    this.onClickHandler = this.onClickHandler.bind(this);
+    this.onSearchHandler = this.onSearchHandler.bind(this);
     this.setStore = this.setStore.bind(this);
+    this.onLoginHandler = this.onLoginHandler.bind(this);
   }
 
-  setStore(state) {
-    console.log('SET STORE');
-    this.setState(state)
-  }
 
   componentDidMount() {
     $.ajax({
@@ -43,7 +44,34 @@ class App extends React.Component {
     });
   }
 
-  onClickHandler(e) {
+  setStore(state) {
+    console.log('SET STORE');
+    this.setState(state)
+  }
+
+  onLoginHandler(event) {
+    event.preventDefault();
+    var userInput = {
+      username: event.target.username.value,
+      password: event.target.password.value
+    };
+    $.ajax({
+      url: SERVER_URL + '/login',
+      type: 'POST',
+      data: userInput,
+      success: (username) => {
+        this.setState({
+          username: username,
+          loggedIn: true
+        });
+      },
+      error: (err) => {
+        console.log('err', err);
+      }
+    });
+  }
+
+  onSearchHandler(e) {
     e.preventDefault();
     console.log('QUERY STATE: ', this.state.query);
     var options = {};
@@ -52,7 +80,7 @@ class App extends React.Component {
     var queryArray = options.ingredients;
     console.log('Query Array', queryArray);
 
-    searchSpoonacular(options, (matches) => {
+    searchYummly(options, (matches) => {
       var resultsArray = [];
       console.log('API Data Matches Length: ', matches.length);
       console.log('API Data Matches Length: ', matches);
@@ -114,16 +142,22 @@ class App extends React.Component {
   }
 
   bootstrapView() {
+    if (this.state.loggedIn) {
+      var username = this.state.username;
+    } else {
+      var username = "Not Logged In"
+    }
     return (
     <div>
-      <NavBar />
+      <NavBar username={username} loggedIn={this.state.loggedIn}/>
       <Parallax className="main-card" bgImage="http://chicago-woman.com/downloads/4988/download/Pantry%20Essentails-%20High%20Res.jpeg?cb=e59f0a5326ccffaeddcad2f813efb9ad" strength={400}>
         <div>
           <h1 className="subtitle"><br/>Why run to the grocery store when you have all the ingredients you need at home? Here at Byte, we help you see the potential of your pantry.</h1>
         </div>
       </Parallax>
+      <LoginSubmissionForm onLoginHandler={this.onLoginHandler}/>
       <div className="container">
-        <Search clickHandler={this.onClickHandler} setStore={this.setStore} appState={this.state}/>
+        <Search clickHandler={this.onSearch} setStore={this.setStore} appState={this.state}/>
         <RecipeList data={this.state.data} />
       </div>
     </div>);
