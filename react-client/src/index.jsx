@@ -36,15 +36,7 @@ class App extends React.Component {
 
 
   componentDidMount() {
-    $.ajax({
-      url: '/users_recipes',
-      success: (data) => {
-        console.log('WHAT: ', data);
-      },
-      error: (err) => {
-        console.log('err', err);
-      }
-    });
+
   }
 
   setStore(state) {
@@ -93,65 +85,39 @@ class App extends React.Component {
     var queryArray = options.ingredients;
     console.log('Query Array', queryArray);
 
-    searchSpoonacular(options, (matches) => {
+    searchYummly(options, (matches) => {
       var resultsArray = [];
-      console.log('API Data Matches Length: ', matches.length);
-      console.log('API Data Matches Length: ', matches);
-
       for (var i = 0; i < matches.length; i++) {
-
         var currentMatchIngredientsArray = matches[i].ingredients;
-        console.log('INGREDIENTS for', currentMatchIngredientsArray);
-
-        //check if list of ingredients of match result is greater than query ingredient list
-        //if so, then match will not be included in our results array. Continue on to next iteration
-        //of for loo[]
         if (currentMatchIngredientsArray.length > queryArray.length) {
-          console.log('Not a match');
           continue;
         }
-
-        //otherwise, we cycle through the match's ingredient list and check if each ingredient
-        //is included in our query ingredient list
         var isMatch = true;
         for (var j = 0; j < currentMatchIngredientsArray.length; j++) {
-
             var currentIngredientMashed = currentMatchIngredientsArray[j].split(' ').join('');
             var isFound = false;
-            //check each ingredient to make sure it is included in query ingredient list
             for (var k = 0; k < queryArray.length; k++) {
               var queryIngredientMashed = queryArray[k].split(' ').join('');
               if (currentIngredientMashed.includes(queryIngredientMashed)) {
                 isFound = true;
-                //if ingredient is found, we can move on to checking next ingredient in our list
                 break;
               }
             }
-            //if the current ingredient is not found in the query ingredient list, then we do not include
-            //in our results array and we break out of this for loop and go on to next match
             if (!isFound) {
               isMatch = false;
               break;
             }
         }
-        //push to results array if every single ingredient can be found in query ingredient list
         if (isMatch) {
-          console.log('Is a match! *********************************************************************');
           resultsArray.push(matches[i]);
-        } else {
-          console.log('Not a match');
         }
       }
-
-      console.log('RESULTS ARRAY', resultsArray);
-      console.log('MATCHES ARRAY', matches);
       if (this.state.searchMode === "Strict") {
         this.setState({data: resultsArray});
       } else if (this.state.searchMode === "Loose") {
         this.setState({data: matches});
       }
     });
-
   }
 
   favoritesView() {
