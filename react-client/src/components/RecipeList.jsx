@@ -8,6 +8,9 @@ export default class RecipeList extends React.Component {
   }
 
   createRecipeTable() {
+    if (this.props.data.length === 0) {
+      return;
+    }
     var table = [];
     for (var n = 0; n < 9; n++) {
       if (this.props.data[n] !== undefined) {
