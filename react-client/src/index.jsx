@@ -23,12 +23,15 @@ class App extends React.Component {
       data: SAMPLE_DATA,
       searchMode: "Loose",
       username: null,
-      loggedIn: false
+      loggedIn: false,
+      userFavorites: [],
+      view: 'home'
     }
 
-    this.onSearchHandler = this.onSearchHandler.bind(this);
     this.setStore = this.setStore.bind(this);
+    this.onSearchHandler = this.onSearchHandler.bind(this);
     this.onLoginHandler = this.onLoginHandler.bind(this);
+    this.onFavoriteHandler = this.onFavoriteHandler.bind(this);
   }
 
 
@@ -47,6 +50,16 @@ class App extends React.Component {
   setStore(state) {
     console.log('SET STORE');
     this.setState(state)
+  }
+
+  onFavoriteHandler(event, data) {
+    event.preventDefault();
+    var favorites = this.state.userFavorites.slice();
+    favorites.push(data);
+    this.setState({
+      userFavorites: favorites
+    });
+    console.log('Favorites: ', favorites);
   }
 
   onLoginHandler(event) {
@@ -144,21 +157,26 @@ class App extends React.Component {
   bootstrapView() {
     if (this.state.loggedIn) {
       var username = this.state.username;
+      var userDisplay = null;
     } else {
       var username = "Not Logged In"
+      var userDisplay = (
+        <div>
+          <Parallax className="main-card" bgImage="http://chicago-woman.com/downloads/4988/download/Pantry%20Essentails-%20High%20Res.jpeg?cb=e59f0a5326ccffaeddcad2f813efb9ad" strength={400}>
+            <div>
+              <h1 className="subtitle"><br/>Why run to the grocery store when you have all the ingredients you need at home? Here at Byte, we help you see the potential of your pantry.</h1>
+            </div>
+          </Parallax>
+          <LoginSubmissionForm onLoginHandler={this.onLoginHandler}/>
+        </div>);
     }
     return (
     <div>
-      <NavBar username={username} loggedIn={this.state.loggedIn}/>
-      <Parallax className="main-card" bgImage="http://chicago-woman.com/downloads/4988/download/Pantry%20Essentails-%20High%20Res.jpeg?cb=e59f0a5326ccffaeddcad2f813efb9ad" strength={400}>
-        <div>
-          <h1 className="subtitle"><br/>Why run to the grocery store when you have all the ingredients you need at home? Here at Byte, we help you see the potential of your pantry.</h1>
-        </div>
-      </Parallax>
-      <LoginSubmissionForm onLoginHandler={this.onLoginHandler}/>
+      <NavBar setStore={this.setStore} username={username} loggedIn={this.state.loggedIn} />
+      {userDisplay}
       <div className="container">
-        <Search clickHandler={this.onSearch} setStore={this.setStore} appState={this.state}/>
-        <RecipeList data={this.state.data} />
+        <Search clickHandler={this.onSearchHandler} setStore={this.setStore} appState={this.state}/>
+        <RecipeList data={this.state.data} onFavoriteHandler={this.onFavoriteHandler}/>
       </div>
     </div>);
   }
@@ -178,7 +196,10 @@ class App extends React.Component {
   }
 
   render () {
-    return <div>{this.bootstrapView()}</div>
+    return (
+      <div>
+        {this.bootstrapView()}
+      </div>);
   }
 }
 

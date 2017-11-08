@@ -22,8 +22,16 @@ const NavBar = (props) => {
         </NavDropdown>
       </Nav>
       <Nav pullRight>
-        <NavItem eventKey={1} href="#">{(props.loggedIn) ? props.username : "Log In"}</NavItem>
-        <NavItem eventKey={2} href="#">{(props.loggedIn) ? "Log Out" : "Sign Up"}</NavItem>
+        {((props.loggedIn) ? <NavItem eventKey={1} href="#" onClick={() => { props.setStore({view: 'favorites'})}}>Favorites</NavItem> : null)}
+        <NavItem eventKey={2} href="#">{(props.loggedIn) ? props.username : "Log In"}</NavItem>
+        <NavItem eventKey={3} href="#">{(props.loggedIn) ? "Log Out" : "Sign Up"}</NavItem>
+
+        {/* <NavDropdown eventKey={4} title="Navigate">
+          <MenuItem eventKey={3.1}>Favorites</MenuItem>
+          <MenuItem divider />
+          <MenuItem eventKey={3.2}>Log Out</MenuItem>
+        </NavDropdown> */}
+
       </Nav>
     </Navbar.Collapse>
   </Navbar></div>);

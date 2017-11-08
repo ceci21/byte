@@ -38,7 +38,7 @@ const RecipeEntry = (props) => {
               return element;
             })}</CardText>
             <div className="center">
-              <a href="google.com">
+              <a onClick={(event) => {props.onFavoriteHandler(event, props.data)}}>
                 <span className="recipe-favorite">
                   <TiHeartFullOutline />
                 </span>
