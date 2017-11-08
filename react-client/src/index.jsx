@@ -11,6 +11,7 @@ import { Jumbotron } from 'react-bootstrap';
 import NavBar from './components/NavBar.jsx';
 import { Parallax } from 'react-parallax';
 import LoginSubmissionForm from './components/LoginSubmissionForm.jsx';
+import Modal from 'react-modal'
 
 const SERVER_URL = "http://127.0.0.1:3000";
 
@@ -25,13 +26,32 @@ class App extends React.Component {
       username: null,
       loggedIn: false,
       userFavorites: [],
-      view: 'home'
+      view: 'home',
+      modalLogin: false,
+      modalIsOpen: true
     }
 
     this.setStore = this.setStore.bind(this);
     this.onSearchHandler = this.onSearchHandler.bind(this);
     this.onLoginHandler = this.onLoginHandler.bind(this);
     this.onFavoriteHandler = this.onFavoriteHandler.bind(this);
+    this.modalLogin = this.modalLogin.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeModal = this.closeModal.bind(this);
+  }
+
+  openModal() {
+    this.setState({modalIsOpen: true});
+  }
+
+  afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    // this.subtitle.style.color = '#f00';
+  }
+
+  closeModal() {
+    this.setState({modalIsOpen: false});
   }
 
 
@@ -125,6 +145,13 @@ class App extends React.Component {
     <RecipeList data={this.state.data} onFavoriteHandler={this.onFavoriteHandler}/></div>);
   }
 
+  modalLogin() {
+    this.setState({
+      modalLogin: true
+    })
+
+  }
+
   homeView() {
     if (this.state.loggedIn) {
       var username = this.state.username;
@@ -138,14 +165,24 @@ class App extends React.Component {
               <h1 className="subtitle"><br/>Why run to the grocery store when you have all the ingredients you need at home? Here at Byte, we help you see the potential of your pantry.</h1>
             </div>
           </Parallax>
-          <LoginSubmissionForm onLoginHandler={this.onLoginHandler}/>
         </div>);
     }
+
     return (
     <div>
-      <NavBar setStore={this.setStore} username={username} loggedIn={this.state.loggedIn} />
+      <NavBar setStore={this.setStore} modalLogin={this.modalLogin} username={username} loggedIn={this.state.loggedIn} />
       {userDisplay}
       <div className="container">
+        <Modal
+          isOpen={this.state.modalLogin}
+          onAfterOpen={this.afterOpenModal}
+          onRequestClose={this.closeModal}
+          contentLabel="Example Modal"
+        >
+          <LoginSubmissionForm onLoginHandler={this.onLoginHandler}/>
+          <button onClick={this.closeModal}>close</button>
+          <div>I am a modal</div>
+        </Modal>
         <Search clickHandler={this.onSearchHandler} setStore={this.setStore} appState={this.state}/>
         <RecipeList data={this.state.data} onFavoriteHandler={this.onFavoriteHandler}/>
       </div>
