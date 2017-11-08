@@ -99,8 +99,6 @@ class App extends React.Component {
         } else {
           console.log('Not a match');
         }
-
-
       }
 
       console.log('RESULTS ARRAY', resultsArray);

@@ -23,7 +23,6 @@ build/
 
 # Yummly API Key
 react-client/src/config/yummly.js
-react-client/src/lib/searchYummly.js
 react-client/dist/bundle.js
 
 # Dependency directorys
