@@ -5,7 +5,7 @@ const NavBar = (props) => {
   return (<div><Navbar fixedTop inverse collapseOnSelect>
     <Navbar.Header>
       <Navbar.Brand>
-        <a href="#" className="title">Byte!</a>
+        <a href="#" className="title" onClick={() => {props.setStore({view: 'home'})}}>Byte!</a>
       </Navbar.Brand>
       <Navbar.Toggle />
     </Navbar.Header>

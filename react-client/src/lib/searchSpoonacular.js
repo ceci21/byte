@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
-var apiKey = null;
-var getUrl = null;
+var apiKey = "DbYLQPD1ZGmshuSTypfqnBmQ3aZfp1uieQ6jsn4a0BqErZxQmz";
+var getUrl = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients";
 
 var searchSpoonacular = function(options, callback) {
   console.log("I'm being searched!");
@@ -11,10 +11,10 @@ var searchSpoonacular = function(options, callback) {
        url: getUrl,
        type: "GET",
        data: {
-         includeIngredients: query,
+         ingredients: query,
          fillIngredients: true,
          ranking: 2,
-         number: 100
+         number: 1000
        },
        headers: {'X-Mashape-Key': apiKey},
        success: function(data) {
