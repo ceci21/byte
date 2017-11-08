@@ -55,6 +55,7 @@ a {
   justifyContent: 'center';
   alignItems: 'center';
   font-family: "Oranienbaum";
+  font-weight: bold;
   text-align: center;
   color: white;
   text-shadow: 2px 2px #333333;
@@ -76,7 +77,6 @@ a {
 .recipe-entry {
   padding: .5em;
   display: inline-block;
-  float: top;
   width: 33%;
   padding-bottom: 2em;
   max-height: 10em;
@@ -120,8 +120,11 @@ a {
 }
 
 
-@media only screen and (max-width: 768px) {
+@media only screen and (max-width: 800px) {
 
+    [class*="col-"] {
+      width: 100%;
+    }
     .recipe-entry {
       width: 100%;
     }

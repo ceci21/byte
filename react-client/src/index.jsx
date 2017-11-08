@@ -5,6 +5,7 @@ import RecipeList from './components/RecipeList.jsx';
 import Search from './components/Search.jsx';
 import _Test from './_Test.jsx'; /* Feel free to remove me! */
 import {searchYummly} from './lib/searchYummly.js';
+import {searchSpoonacular} from './lib/searchSpoonacular.js';
 import SAMPLE_DATA from './data/SAMPLE_DATA.js';
 import { Jumbotron } from 'react-bootstrap';
 import NavBar from './components/NavBar.jsx';
@@ -51,7 +52,7 @@ class App extends React.Component {
     var queryArray = options.ingredients;
     console.log('Query Array', queryArray);
 
-    searchYummly(options, (matches) => {
+    searchSpoonacular(options, (matches) => {
       var resultsArray = [];
       console.log('API Data Matches Length: ', matches.length);
       console.log('API Data Matches Length: ', matches);
@@ -109,6 +110,7 @@ class App extends React.Component {
         this.setState({data: matches});
       }
     });
+
   }
 
   bootstrapView() {
