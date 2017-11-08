@@ -1,9 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import RecipeList_Test from './components/RecipeList_Test.jsx';
-import Search from './components/Search.jsx';
 import RecipeList from './components/RecipeList.jsx';
+import Search from './components/Search.jsx';
 import _Test from './_Test.jsx'; /* Feel free to remove me! */
 import {searchYummly} from './lib/searchYummly.js';
 import SAMPLE_DATA from './data/SAMPLE_DATA.js';
@@ -18,7 +17,8 @@ class App extends React.Component {
     this.state = {
       items: [],
       query: '',
-      data: SAMPLE_DATA
+      data: SAMPLE_DATA,
+      searchMode: "Loose"
     }
 
     this.onClickHandler = this.onClickHandler.bind(this);
@@ -100,8 +100,14 @@ class App extends React.Component {
           console.log('Not a match');
         }
       }
-      // this.setState({data: resultsArray});
-     this.setState({data: matches});
+
+      console.log('RESULTS ARRAY', resultsArray);
+      console.log('MATCHES ARRAY', matches);
+      if (this.state.searchMode === "Strict") {
+        this.setState({data: resultsArray});
+      } else if (this.state.searchMode === "Loose") {
+        this.setState({data: matches});
+      }
     });
   }
 
@@ -115,8 +121,8 @@ class App extends React.Component {
         </div>
       </Parallax>
       <div className="container">
-        <Search clickHandler={this.onClickHandler} setStore={this.setStore}/>
-        <RecipeList_Test data={this.state.data} />
+        <Search clickHandler={this.onClickHandler} setStore={this.setStore} appState={this.state}/>
+        <RecipeList data={this.state.data} />
       </div>
     </div>);
   }
@@ -127,7 +133,7 @@ class App extends React.Component {
       <button onClick={(event) => {
         this.onClickHandler();
       }}>API Test</button>
-      <RecipeList_Test data={SAMPLE_DATA}/>
+      <RecipeList data={SAMPLE_DATA}/>
       <h1>User List</h1>
       <Search clickHandler={this.onClickHandler} setStore={this.setStore}/>
       <RecipeList items={this.state.items} />

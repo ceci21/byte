@@ -32,12 +32,13 @@ a {
   font-size: 3em;
 }
 
-.search-input {
-  width: 80%;
+.search-dropdown {
   display: inline-block;
 }
-.search-button {
 
+.search-input {
+  width: 20%;
+  display: inline-block;
 }
 
 .main-card {
@@ -116,4 +117,15 @@ a {
 .recipe-image {
   width: 100%;
   height: 10em;
+}
+
+
+@media only screen and (max-width: 768px) {
+
+    .recipe-entry {
+      width: 100%;
+    }
+    .recipe-ingredients {
+
+    }
 }

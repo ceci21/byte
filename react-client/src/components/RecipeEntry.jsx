@@ -5,11 +5,11 @@ import { Parallax } from 'react-parallax';
 import TiHeartFullOutline from 'react-icons/lib/ti/heart-full-outline';
 
 
-const RecipeEntry_Test = (props) => {
+const RecipeEntry = (props) => {
   // Create new image link with higher resolution
   var imgLink = props.data.imageUrlsBySize["90"];
   var imgSizePropertyIndex = imgLink.indexOf("=s90-c");
-  imgLink = imgLink.slice(0, imgSizePropertyIndex) + "=s1080-c";
+  imgLink = imgLink.slice(0, imgSizePropertyIndex) + "=s540-c";
 
   // Limit title to 25 characters
   if (props.data.recipeName.length > 19) {
@@ -20,12 +20,12 @@ const RecipeEntry_Test = (props) => {
 
   var ingredientsArray = [];
   for (var n = 0; n < props.data.ingredients.length; n++) {
-      if (props.data.ingredients[n].length > 32) {
-        ingredientsArray.push(<li>{props.data.ingredients[n].slice(0, 32) + "..."}</li>);
-      } else {
-        ingredientsArray.push(<li>{props.data.ingredients[n]}</li>);
-      }
+    if (props.data.ingredients[n].length > 32) {
+      ingredientsArray.push(<li>{props.data.ingredients[n].slice(0, 32) + "..."}</li>);
+    } else {
+      ingredientsArray.push(<li>{props.data.ingredients[n]}</li>);
     }
+  }
 
   return (
     <div className="recipe-entry" id={props.id}>
@@ -50,4 +50,4 @@ const RecipeEntry_Test = (props) => {
     </div>);
 }
 
-export default RecipeEntry_Test;
+export default RecipeEntry;

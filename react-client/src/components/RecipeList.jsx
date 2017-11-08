@@ -1,12 +1,23 @@
 import React from 'react';
-import RecipeListItem from './RecipeListItem.jsx';
+import RecipeEntry from './RecipeEntry.jsx';
 
-const RecipeList = (props) => (
-  <div>
-    <h4> RecipeList </h4>
-    There are { props.items.length } users.
-    { props.items.map(item => <RecipeListItem item={item}/>)}
-  </div>
-)
+export default class RecipeList extends React.Component {
+  constructor(props) {
+    super(props);
+    this.createRecipeTable = this.createRecipeTable.bind(this);
+  }
 
-export default RecipeList;
+  createRecipeTable() {
+    var table = [];
+    for (var n = 0; n < 9; n++) {
+      if (this.props.data[n] !== undefined) {
+        table.push(<RecipeEntry id={n} data={this.props.data[n]} />);
+      }
+    }
+    return table;
+  }
+
+  render() {
+    return <div className="recipe-list">{this.createRecipeTable()}</div>
+  }
+}
