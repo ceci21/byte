@@ -35,6 +35,7 @@ class App extends React.Component {
 
     this.setStore = this.setStore.bind(this);
     this.onSearchHandler = this.onSearchHandler.bind(this);
+    this.onSearchHandler2 = this.onSearchHandler2.bind(this);
     this.onLoginHandler = this.onLoginHandler.bind(this);
     this.onFavoriteHandler = this.onFavoriteHandler.bind(this);
     this.modalLogin = this.modalLogin.bind(this);
@@ -60,11 +61,6 @@ class App extends React.Component {
 
   closeSignup() {
     this.setState({modalSignup: false})
-  }
-
-
-  componentDidMount() {
-
   }
 
   setStore(state) {
@@ -105,6 +101,29 @@ class App extends React.Component {
     })
   }
 
+  onSearchHandler2(e) {
+    e.preventDefault();
+    var options = {};
+    options.ingredients = this.state.query.split(", ");
+    var queryArray = options.ingredients;
+
+    searchSpoonacular(options, (matches) => {
+      console.log("Searching Spoonacular....");
+      var data = [];
+      if (this.state.searchMode === "Strict") {
+        for (var n = 0; n < matches.length; n++) {
+          if (matches[n].missedIngredientCount === 0) {
+            data.push(matches[n]);
+          }
+        }
+      } else if (this.state.searchMode === "Loose") {
+        data = matches;
+      }
+      console.log('Data showing up: ', data);
+      this.setStore({data: data});
+    });
+  }
+
   onSearchHandler(e) {
     e.preventDefault();
     console.log('QUERY STATE: ', this.state.query);
@@ -114,10 +133,11 @@ class App extends React.Component {
     var queryArray = options.ingredients;
     console.log('Query Array', queryArray);
 
-    searchYummly(options, (matches) => {
+    searchSpoonacular(options, (matches) => {
+      console.log(matches);
       var resultsArray = [];
       for (var i = 0; i < matches.length; i++) {
-        var currentMatchIngredientsArray = matches[i].ingredients;
+        var currentMatchIngredientsArray = matches[i].usedIngredients;
         if (currentMatchIngredientsArray.length > queryArray.length) {
           continue;
         }
@@ -150,8 +170,13 @@ class App extends React.Component {
   }
 
   favoritesView() {
-    return (<div className="container"><NavBar setStore={this.setStore} username={username} loggedIn={this.state.loggedIn} />
-    <RecipeList data={this.state.data} onFavoriteHandler={this.onFavoriteHandler}/></div>);
+    return (
+      <div className="container">
+        <div style={{"padding": "5em"}}/>
+        <NavBar setStore={this.setStore} username={this.state.username} loggedIn={this.state.loggedIn} />
+        <RecipeList data={this.state.userFavorites} onFavoriteHandler={this.onFavoriteHandler}/>
+      </div>
+    );
   }
 
   modalLogin() {
@@ -208,7 +233,7 @@ class App extends React.Component {
           <div>I am a modal</div>
         </Modal>
 
-        <Search clickHandler={this.onSearchHandler} setStore={this.setStore} appState={this.state}/>
+        <Search clickHandler={this.onSearchHandler2} setStore={this.setStore} appState={this.state}/>
         <RecipeList data={this.state.data} onFavoriteHandler={this.onFavoriteHandler}/>
       </div>
     </div>);
@@ -216,22 +241,20 @@ class App extends React.Component {
 
   testComponents() {
     return (<div>
-      <input type="text" onChange={(event) => {this.setState({query: event.target.value})}}></input>
-      <button onClick={(event) => {
-        this.onClickHandler();
-      }}>API Test</button>
-      <RecipeList data={SAMPLE_DATA}/>
-      <h1>User List</h1>
-      <Search clickHandler={this.onClickHandler} setStore={this.setStore}/>
-      <RecipeList items={this.state.items} />
       <_Test /> {/*Feel free to remove me!*/}
     </div>);
   }
 
   render () {
+    if (this.state.view === 'home') {
+      var view = this.homeView();
+    } else if (this.state.view === 'favorites') {
+      var view = this.favoritesView();
+    }
+
     return (
       <div>
-        {this.homeView()}
+        {view}
       </div>);
   }
 }
