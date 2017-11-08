@@ -56,13 +56,36 @@ app.get('/users_recipes', function(req, res) {
   })
 });
 
-app.post('/login', function(req, res, next) {
+app.post('/login', function(req, res) {
   console.log('POST: login');
   console.log(req.body);
-  req.session.username = req.body.username;
-  req.session.password = req.body.password;
-  res.send(req.session.username);
+  Users.getUser(req.body)
+    .then((data) => {
+      res.send(data).status(201);
+    })
+    .catch( (err) => {
+      console.log('USER DB ERROR: ', err);
+      res.status(500).end();
+    })
+  // req.session.username = req.body.username;
+  // req.session.password = req.body.password;
+  // res.send(req.session.username);
+  //201 is successfull post request
+
 });
+
+app.post('/signup', function(req, res) {
+  console.log("SIGNUP post: ", req.body);
+  Users.addUser(req.body)
+    .then((data) => {
+      res.send(data).status(201)
+    })
+    .catch((err) => {
+      console.log('SIGN UP error: ', err);
+      res.status(500).end()
+    })
+  res.end();
+})
 
 app.listen(3000, function() {
   console.log('listening on port 3000!');

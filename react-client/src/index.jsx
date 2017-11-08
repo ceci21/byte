@@ -11,6 +11,7 @@ import { Jumbotron } from 'react-bootstrap';
 import NavBar from './components/NavBar.jsx';
 import { Parallax } from 'react-parallax';
 import LoginSubmissionForm from './components/LoginSubmissionForm.jsx';
+import SignupSubmissionForm from './components/SignupSubmissionForm.jsx';
 import Modal from 'react-modal'
 
 const SERVER_URL = "http://127.0.0.1:3000";
@@ -28,7 +29,8 @@ class App extends React.Component {
       userFavorites: [],
       view: 'home',
       modalLogin: false,
-      modalIsOpen: true
+      modalIsOpen: true,
+      modalSignup: false
     }
 
     this.setStore = this.setStore.bind(this);
@@ -36,9 +38,11 @@ class App extends React.Component {
     this.onLoginHandler = this.onLoginHandler.bind(this);
     this.onFavoriteHandler = this.onFavoriteHandler.bind(this);
     this.modalLogin = this.modalLogin.bind(this);
+    this.modalSignup = this.modalSignup.bind(this);
     this.openModal = this.openModal.bind(this);
     this.afterOpenModal = this.afterOpenModal.bind(this);
-    this.closeModal = this.closeModal.bind(this);
+    this.closeLogin = this.closeLogin.bind(this);
+    this.closeSignup = this.closeSignup.bind(this);
   }
 
   openModal() {
@@ -50,8 +54,12 @@ class App extends React.Component {
     // this.subtitle.style.color = '#f00';
   }
 
-  closeModal() {
-    this.setState({modalIsOpen: false});
+  closeLogin() {
+    this.setState({modalLogin: false})
+  }
+
+  closeSignup() {
+    this.setState({modalSignup: false})
   }
 
 
@@ -80,20 +88,21 @@ class App extends React.Component {
       username: event.target.username.value,
       password: event.target.password.value
     };
-    $.ajax({
-      url: SERVER_URL + '/login',
-      type: 'POST',
-      data: userInput,
-      success: (username) => {
-        this.setState({
-          username: username,
-          loggedIn: true
-        });
-      },
-      error: (err) => {
-        console.log('err', err);
-      }
-    });
+    $.post('/login', userInput, function(data) {
+      console.log('Login POST data: ', data);
+    })
+  }
+
+  onSignupHandler(event) {
+    event.preventDefault();
+    var userInput = {
+      username: event.target.username.value,
+      password: event.target.password.value
+    };
+    console.log('SIGNUP HANDLER');
+    $.post('/signup', userInput, function(data) {
+      console.log('SIGN UP Post data: ', data);
+    })
   }
 
   onSearchHandler(e) {
@@ -149,7 +158,12 @@ class App extends React.Component {
     this.setState({
       modalLogin: true
     })
+  }
 
+  modalSignup() {
+    this.setState({
+      modalSignup: true
+    })
   }
 
   homeView() {
@@ -170,19 +184,30 @@ class App extends React.Component {
 
     return (
     <div>
-      <NavBar setStore={this.setStore} modalLogin={this.modalLogin} username={username} loggedIn={this.state.loggedIn} />
+      <NavBar setStore={this.setStore} modalSignup={this.modalSignup} modalLogin={this.modalLogin} username={username} loggedIn={this.state.loggedIn} />
       {userDisplay}
       <div className="container">
         <Modal
           isOpen={this.state.modalLogin}
-          onAfterOpen={this.afterOpenModal}
+          // onAfterOpen={this.afterOpenModal} this is here to show that this onAfterOpen method is available
           onRequestClose={this.closeModal}
           contentLabel="Example Modal"
         >
           <LoginSubmissionForm onLoginHandler={this.onLoginHandler}/>
-          <button onClick={this.closeModal}>close</button>
+          <button onClick={this.closeLogin}>close</button>
           <div>I am a modal</div>
         </Modal>
+
+        <Modal
+          isOpen={this.state.modalSignup}
+          onRequestClose={this.closeModal}
+          contentLabel="Example Modal"
+        >
+          <SignupSubmissionForm onSignupHandler={this.onSignupHandler}/>
+          <button onClick={this.closeSignup}>close</button>
+          <div>I am a modal</div>
+        </Modal>
+
         <Search clickHandler={this.onSearchHandler} setStore={this.setStore} appState={this.state}/>
         <RecipeList data={this.state.data} onFavoriteHandler={this.onFavoriteHandler}/>
       </div>

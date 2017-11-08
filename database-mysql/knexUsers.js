@@ -2,8 +2,14 @@ var Users = {};
 
 var knex = require('./knexSetup')
 
-Users.getUsers = (data) => {
-  return knex.select().from('users')
+Users.getUser = (data) => {
+  console.log('DB User :', data);
+  // var user = knex.select().from('users').where('name',data.username)
+  return knex('users').where('name', data.username);
+}
+
+Users.addUser = (data) => {
+  return knex('users').insert({name: data.username, password: data.password})
 }
 
 Users.getRecipes = (data) => {
