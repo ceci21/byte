@@ -22,8 +22,8 @@ const NavBar = (props) => {
         </NavDropdown>
       </Nav>
       <Nav pullRight>
-        <NavItem eventKey={1} href="#">Link Right</NavItem>
-        <NavItem eventKey={2} href="#">Link Right</NavItem>
+        <NavItem eventKey={1} href="#">{(props.loggedIn) ? props.username : "Log In"}</NavItem>
+        <NavItem eventKey={2} href="#">{(props.loggedIn) ? "Log Out" : "Sign Up"}</NavItem>
       </Nav>
     </Navbar.Collapse>
   </Navbar></div>);
