@@ -54,6 +54,8 @@ class App extends React.Component {
     console.log('Favorites: ', favorites);
   }
 
+
+
   onLoginHandler(event) {
     event.preventDefault();
     var userInput = {
@@ -121,8 +123,13 @@ class App extends React.Component {
   }
 
   favoritesView() {
-    return (<div className="container"><NavBar setStore={this.setStore} username={username} loggedIn={this.state.loggedIn} />
-    <RecipeList data={this.state.data} onFavoriteHandler={this.onFavoriteHandler}/></div>);
+    return (
+      <div className="container">
+        <div style={{"padding": "5em"}}/>
+        <NavBar setStore={this.setStore} username={this.state.username} loggedIn={this.state.loggedIn} />
+        <RecipeList data={this.state.userFavorites} onFavoriteHandler={this.onFavoriteHandler}/>
+      </div>
+    );
   }
 
   homeView() {
@@ -167,9 +174,15 @@ class App extends React.Component {
   }
 
   render () {
+    if (this.state.view === 'home') {
+      var view = this.homeView();
+    } else if (this.state.view === 'favorites') {
+      var view = this.favoritesView();
+    }
+
     return (
       <div>
-        {this.homeView()}
+        {view}
       </div>);
   }
 }
