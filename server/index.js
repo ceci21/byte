@@ -5,6 +5,7 @@ var bcrypt = require('bcrypt');
 
 var Recipes = require('../database-mysql/knexRecipes.js')
 var Users = require('../database-mysql/knexUsers.js')
+var UsersRecipes = require('../database-mysql/knexUsersRecipes.js')
 
 var app = express();
 
@@ -46,7 +47,7 @@ app.get('/recipes', function(req, res) {
 });
 
 app.get('/users_recipes', function(req, res) {
-  Recipes.getUsersRecipes()
+  UsersRecipes.getUsersRecipes()
   .then((data) => {
     res.json(data)
   })
@@ -56,6 +57,11 @@ app.get('/users_recipes', function(req, res) {
   })
 });
 
+app.get('/favorites', function(req, res) {
+  // Get users favorites
+  UsersRecipes.getFavorites()
+});
+
 app.post('/login', function(req, res, next) {
   console.log('POST: login');
   console.log(req.body);
@@ -63,6 +69,11 @@ app.post('/login', function(req, res, next) {
   req.session.password = req.body.password;
   res.send(req.session.username);
 });
+
+app.post('/favorite', function(req, res, next) {
+  console.log('POST: favorite');
+  console.log(req.body);
+})
 
 app.listen(3000, function() {
   console.log('listening on port 3000!');
