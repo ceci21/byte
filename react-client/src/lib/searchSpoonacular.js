@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
-var apiKey = null;
-var getUrl = null;
+var apiKey = "DbYLQPD1ZGmshuSTypfqnBmQ3aZfp1uieQ6jsn4a0BqErZxQmz";
+var getUrl = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/searchComplex"
 
 var searchSpoonacular = function(options, callback) {
   console.log("I'm being searched!");
@@ -18,11 +18,7 @@ var searchSpoonacular = function(options, callback) {
        },
        headers: {'X-Mashape-Key': apiKey},
        success: function(data) {
-         for (var n = 0; n < data.results.length; n++) {
-           console.log('Used ingredients: ', data.results[n].usedIngredientCount);
-           console.log('Missed ingredients: ', data.results[n].missedIngredientCount);
-           console.log('----');
-         }
+         console.log('Data: ', data);
          callback(data);
        },
        error: function(err) {

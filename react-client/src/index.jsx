@@ -93,7 +93,7 @@ class App extends React.Component {
     var queryArray = options.ingredients;
     console.log('Query Array', queryArray);
 
-    searchYummly(options, (matches) => {
+    searchSpoonacular(options, (matches) => {
       var resultsArray = [];
       console.log('API Data Matches Length: ', matches.length);
       console.log('API Data Matches Length: ', matches);
@@ -154,7 +154,12 @@ class App extends React.Component {
 
   }
 
-  bootstrapView() {
+  favoritesView() {
+    return (<div className="container"><NavBar setStore={this.setStore} username={username} loggedIn={this.state.loggedIn} />
+    <RecipeList data={this.state.data} onFavoriteHandler={this.onFavoriteHandler}/></div>);
+  }
+
+  homeView() {
     if (this.state.loggedIn) {
       var username = this.state.username;
       var userDisplay = null;
@@ -198,7 +203,7 @@ class App extends React.Component {
   render () {
     return (
       <div>
-        {this.bootstrapView()}
+        {this.homeView()}
       </div>);
   }
 }
