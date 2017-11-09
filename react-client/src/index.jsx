@@ -16,6 +16,19 @@ import Modal from 'react-modal'
 
 const SERVER_URL = "http://127.0.0.1:3000";
 
+
+const customStyles = {
+  content : {
+    top                   : '50%',
+    left                  : '50%',
+    right                 : 'auto',
+    bottom                : 'auto',
+    marginRight           : '-50%',
+    transform             : 'translate(-50%, -50%)',
+    overflow              : 'none'
+  }
+};
+
 class App extends React.Component {
   constructor(props) {
     super(props);
@@ -222,6 +235,7 @@ class App extends React.Component {
       <div className="container">
         <Modal
           isOpen={this.state.modalLogin}
+          style={customStyles}
           // onAfterOpen={this.afterOpenModal} this is here to show that this onAfterOpen method is available
           // onRequestClose={this.closeModal} this is here to show that this onAfterOpen method is available
           contentLabel="login"
@@ -234,6 +248,7 @@ class App extends React.Component {
         <Modal
           isOpen={this.state.modalSignup}
           contentLabel="signup"
+          style={customStyles}
         >
           <SignupSubmissionForm onSignupHandler={this.onSignupHandler}/>
           <button onClick={this.closeSignup}>close</button>
