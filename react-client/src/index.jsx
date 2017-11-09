@@ -12,7 +12,7 @@ import NavBar from './components/NavBar.jsx';
 import { Parallax } from 'react-parallax';
 import LoginSubmissionForm from './components/LoginSubmissionForm.jsx';
 import SignupSubmissionForm from './components/SignupSubmissionForm.jsx';
-import Modal from 'react-modal'
+import Modal from 'react-modal';
 
 const SERVER_URL = "http://127.0.0.1:3000";
 
@@ -213,13 +213,14 @@ class App extends React.Component {
     } else {
       var username = "Not Logged In"
       var userDisplay = (
-        <div>
-          <Parallax className="main-card" bgImage="http://chicago-woman.com/downloads/4988/download/Pantry%20Essentails-%20High%20Res.jpeg?cb=e59f0a5326ccffaeddcad2f813efb9ad" strength={400}>
-            <div>
-              <h1 className="subtitle"><br/>Why run to the grocery store when you have all the ingredients you need at home? Here at Byte, we help you see the potential of your pantry.</h1>
+          <Parallax className="main-card" bgImage="https://i.imgur.com/hpz3tXZ.jpg" strength={400}>
+            <div style={{'display':'flex', 'align-items':'center', 'flex-direction':'column', 'height':'100vh'}}>
+              <div style={{'flex':'1'}}/>
+              <div style={{'flex': '1'}}><h1 className="subtitle">Why run to the grocery store when you have all the ingredients you need at home? Here at Byte, we help you see the potential of your pantry.</h1></div>
+              <div style={{'flex':'1'}}/>
             </div>
           </Parallax>
-        </div>);
+        );
     }
 
     return (
