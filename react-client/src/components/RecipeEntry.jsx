@@ -46,7 +46,7 @@ const RecipeEntry = (props) => {
   return (
     <div className="recipe-entry">
       <CardGroup>
-        <Card>
+        <Card style={{"border":"1px solid #2d2d2d", "padding": "1em", "margin":"2em 0em 2em 0em", "margin-top": "2em"}}>
           <Parallax className="recipe-image img-hover" bgImage={imgLink} strength={100}></Parallax>
           <CardBody>
             <CardTitle className="recipe-title">{title}</CardTitle>
