@@ -13,7 +13,7 @@ export default class RecipeList extends React.Component {
     }
     var table = [];
     console.log(this.props.data);
-    for (var n = 0; n < 9; n++) {
+    for (var n = 0; n < 100; n++) {
       if (this.props.data[n] !== undefined) {
         table.push(<RecipeEntry id={n} data={this.props.data[n]} onFavoriteHandler={this.props.onFavoriteHandler} />);
       }
