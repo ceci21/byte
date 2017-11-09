@@ -11,6 +11,8 @@ import { Jumbotron } from 'react-bootstrap';
 import NavBar from './components/NavBar.jsx';
 import { Parallax } from 'react-parallax';
 import LoginSubmissionForm from './components/LoginSubmissionForm.jsx';
+import SignupSubmissionForm from './components/SignupSubmissionForm.jsx';
+import Modal from 'react-modal'
 
 const SERVER_URL = "http://127.0.0.1:3000";
 
@@ -25,7 +27,10 @@ class App extends React.Component {
       username: null,
       loggedIn: false,
       userFavorites: [],
-      view: 'home'
+      view: 'home',
+      modalLogin: false,
+      modalIsOpen: true,
+      modalSignup: false
     }
 
     this.setStore = this.setStore.bind(this);
@@ -33,6 +38,29 @@ class App extends React.Component {
     this.onSearchHandler2 = this.onSearchHandler2.bind(this);
     this.onLoginHandler = this.onLoginHandler.bind(this);
     this.onFavoriteHandler = this.onFavoriteHandler.bind(this);
+    this.modalLogin = this.modalLogin.bind(this);
+    this.modalSignup = this.modalSignup.bind(this);
+    this.openModal = this.openModal.bind(this);
+    this.afterOpenModal = this.afterOpenModal.bind(this);
+    this.closeLogin = this.closeLogin.bind(this);
+    this.closeSignup = this.closeSignup.bind(this);
+  }
+
+  openModal() {
+    this.setState({modalIsOpen: true});
+  }
+
+  afterOpenModal() {
+    // references are now sync'd and can be accessed.
+    // this.subtitle.style.color = '#f00';
+  }
+
+  closeLogin() {
+    this.setState({modalLogin: false})
+  }
+
+  closeSignup() {
+    this.setState({modalSignup: false})
   }
 
   setStore(state) {
@@ -56,20 +84,21 @@ class App extends React.Component {
       username: event.target.username.value,
       password: event.target.password.value
     };
-    $.ajax({
-      url: SERVER_URL + '/login',
-      type: 'POST',
-      data: userInput,
-      success: (username) => {
-        this.setState({
-          username: username,
-          loggedIn: true
-        });
-      },
-      error: (err) => {
-        console.log('err', err);
-      }
-    });
+    $.post('/login', userInput, function(data) {
+      console.log('Login POST data: ', data);
+    })
+  }
+
+  onSignupHandler(event) {
+    event.preventDefault();
+    var userInput = {
+      username: event.target.username.value,
+      password: event.target.password.value
+    };
+    console.log('SIGNUP HANDLER');
+    $.post('/signup', userInput, function(data) {
+      console.log('SIGN UP Post data: ', data);
+    })
   }
 
   onSearchHandler2(e) {
@@ -150,6 +179,18 @@ class App extends React.Component {
     );
   }
 
+  modalLogin() {
+    this.setState({
+      modalLogin: true
+    })
+  }
+
+  modalSignup() {
+    this.setState({
+      modalSignup: true
+    })
+  }
+
   homeView() {
     if (this.state.loggedIn) {
       var username = this.state.username;
@@ -163,14 +204,35 @@ class App extends React.Component {
               <h1 className="subtitle"><br/>Why run to the grocery store when you have all the ingredients you need at home? Here at Byte, we help you see the potential of your pantry.</h1>
             </div>
           </Parallax>
-          <LoginSubmissionForm onLoginHandler={this.onLoginHandler}/>
         </div>);
     }
+
     return (
     <div>
-      <NavBar setStore={this.setStore} username={username} loggedIn={this.state.loggedIn} />
+      <NavBar setStore={this.setStore} modalSignup={this.modalSignup} modalLogin={this.modalLogin} username={username} loggedIn={this.state.loggedIn} />
       {userDisplay}
       <div className="container">
+        <Modal
+          isOpen={this.state.modalLogin}
+          // onAfterOpen={this.afterOpenModal} this is here to show that this onAfterOpen method is available
+          onRequestClose={this.closeModal}
+          contentLabel="Example Modal"
+        >
+          <LoginSubmissionForm onLoginHandler={this.onLoginHandler}/>
+          <button onClick={this.closeLogin}>close</button>
+          <div>I am a modal</div>
+        </Modal>
+
+        <Modal
+          isOpen={this.state.modalSignup}
+          onRequestClose={this.closeModal}
+          contentLabel="Example Modal"
+        >
+          <SignupSubmissionForm onSignupHandler={this.onSignupHandler}/>
+          <button onClick={this.closeSignup}>close</button>
+          <div>I am a modal</div>
+        </Modal>
+
         <Search clickHandler={this.onSearchHandler2} setStore={this.setStore} appState={this.state}/>
         <RecipeList data={this.state.data} onFavoriteHandler={this.onFavoriteHandler}/>
       </div>
