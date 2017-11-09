@@ -4,14 +4,13 @@ var apiKey = null;
 var getUrl = null;
 
 var searchSpoonacular = function(options, callback) {
-  console.log("I'm being searched!");
   var query = options.ingredients.toString();
   console.log("Query: ", query);
     $.ajax({
        url: getUrl,
        type: "GET",
        data: {
-         ingredients: "cabbage, parsley, milk, chocolate, butter, peanut butter, jelly, bread, cinnamon, olives, chicken, cheese",
+         ingredients: query,
          fillIngredients: true,
          ranking: 2,
          number: 100,
