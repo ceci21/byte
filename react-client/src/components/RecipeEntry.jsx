@@ -42,14 +42,22 @@ const RecipeEntry = (props) => {
     }
   }
 
+  var recipeUrl = props.data.image.slice(0, -4);
+  var r = recipeUrl.indexOf('recipeImages/');
+  recipeUrl = recipeUrl.slice(0, r) + recipeUrl.slice(r + 13);
+  console.log("Url string: ", recipeUrl);
+
+  //https://spoonacular.com/red_velvet_cake_balls-66814
+  //https://spoonacular.com/recipeImages/red_velvet_cake_balls-66814.jpg
+
 
   return (
     <div className="recipe-entry">
       <CardGroup>
-        <Card style={{"border":"1px solid #2d2d2d", "padding": "1em", "margin":"2em 0em 2em 0em", "margin-top": "2em"}}>
-          <Parallax className="recipe-image img-hover" bgImage={imgLink} strength={100}></Parallax>
+        <Card style={{"border":"1px solid #cccccc", "padding": "1em", "margin":"2em 0em 2em 0em", "margin-top": "2em"}}>
+          <a href={recipeUrl}><Parallax className="recipe-image img-hover" bgImage={imgLink} strength={100}></Parallax></a>
           <CardBody>
-            <CardTitle className="recipe-title">{title}</CardTitle>
+            <a href={recipeUrl}><CardTitle className="recipe-title">{title}</CardTitle></a>
             <CardText className="recipe-ingredients">{ingredientsArray.map((element, index) => {
               return element;
             })}</CardText>
