@@ -67,6 +67,7 @@ app.post('/login', function(req, res, next) {
   console.log(req.body);
   Users.getUser(req.body)
     .then((data) => {
+      console.log('USER POST DATA', data);
       res.send(data).status(201);
     })
     .catch( (err) => {

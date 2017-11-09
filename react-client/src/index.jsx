@@ -84,8 +84,16 @@ class App extends React.Component {
       username: event.target.username.value,
       password: event.target.password.value
     };
-    $.post('/login', userInput, function(data) {
-      console.log('Login POST data: ', data);
+    $.post('/login', userInput, (data) => {
+      if(data[0].password === userInput.password) {
+        alert("login success")
+        this.setStore({
+          username: userInput.username,
+          loggedIn: true
+        })
+      } else{
+        alert('login fail')
+      }
     })
   }
 
@@ -215,8 +223,8 @@ class App extends React.Component {
         <Modal
           isOpen={this.state.modalLogin}
           // onAfterOpen={this.afterOpenModal} this is here to show that this onAfterOpen method is available
-          onRequestClose={this.closeModal}
-          contentLabel="Example Modal"
+          // onRequestClose={this.closeModal} this is here to show that this onAfterOpen method is available
+          contentLabel="login"
         >
           <LoginSubmissionForm onLoginHandler={this.onLoginHandler}/>
           <button onClick={this.closeLogin}>close</button>
@@ -225,8 +233,7 @@ class App extends React.Component {
 
         <Modal
           isOpen={this.state.modalSignup}
-          onRequestClose={this.closeModal}
-          contentLabel="Example Modal"
+          contentLabel="signup"
         >
           <SignupSubmissionForm onSignupHandler={this.onSignupHandler}/>
           <button onClick={this.closeSignup}>close</button>
