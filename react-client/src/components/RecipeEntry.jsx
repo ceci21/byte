@@ -6,39 +6,21 @@ import TiHeartFullOutline from 'react-icons/lib/ti/heart-full-outline';
 
 
 const RecipeEntry = (props) => {
-  // Create new image link with higher resolution
-  // var imgLink = props.data.imageUrlsBySize["90"];
-  // var imgSizePropertyIndex = imgLink.indexOf("=s90-c");
-  // imgLink = imgLink.slice(0, imgSizePropertyIndex) + "=s540-c";
-
   var imgLink = props.data.image;
 
-  // Limit title to 25 characters
-  if (props.data.title.length > 25) {
-    var title = props.data.title.slice(0, 25) + "...";
-  } else {
-    title = props.data.title;
-  }
+  var title = props.data.title;
 
   var ingredientsArray = [];
   // https://spoonacular.com/recipes/hearty-chicken-chorizo-kale-bean-and-farro-soup-474468
   if (props.data.hasOwnProperty("usedIngredients")) {
     for (var n = 0; n < props.data.usedIngredients.length; n++) {
-      if (props.data.usedIngredients[n].name.length > 32) {
-        ingredientsArray.push(<li key={'li-' + n} value={n}>{props.data.usedIngredients[n].name.slice(0, 32) + "..."}</li>);
-      } else {
-        ingredientsArray.push(<li key={'li-' + n} value={n}>{props.data.usedIngredients[n].name}</li>);
-      }
+      ingredientsArray.push(<li key={'li-' + n} value={n}>{props.data.usedIngredients[n].name}</li>);
     }
   }
 
   if (props.data.hasOwnProperty("missedIngredients")) {
     for (var n = 0; n < props.data.missedIngredients.length; n++) {
-      if (props.data.missedIngredients[n].name.length > 32) {
-        ingredientsArray.push(<li className="missing-ingredient">{props.data.missedIngredients[n].name.slice(0, 32) + "..."}</li>);
-      } else {
-        ingredientsArray.push(<li className="missing-ingredient">{props.data.missedIngredients[n].name}</li>);
-      }
+      ingredientsArray.push(<li className="missing-ingredient">{props.data.missedIngredients[n].name}</li>);
     }
   }
 
@@ -57,10 +39,18 @@ const RecipeEntry = (props) => {
         <Card style={{"border":"1px solid #cccccc", "padding": "1em", "margin":"2em 0em 2em 0em", "margin-top": "2em"}}>
           <a href={recipeUrl}><Parallax className="recipe-image img-hover" bgImage={imgLink} strength={100}></Parallax></a>
           <CardBody>
-            <a href={recipeUrl}><CardTitle className="recipe-title">{title}</CardTitle></a>
-            <CardText className="recipe-ingredients">{ingredientsArray.map((element, index) => {
-              return element;
-            })}</CardText>
+            <div style={{"display":"flex", "flex-direction":"column", "height": "10em"}}>
+              <div style={{"flex": "1"}}>
+                <a href={recipeUrl}>
+                  <CardTitle className="recipe-title">{title}</CardTitle>
+                </a>
+              </div>
+              <div style={{"flex": "1"}}>
+              <CardText className="recipe-ingredients">{ingredientsArray.map((element, index) => {
+                return element;
+              })}</CardText>
+              </div>
+            </div>
             <div className="center">
               <a onClick={(event) => {props.onFavoriteHandler(event, props.data)}}>
                 <span className="recipe-favorite">
