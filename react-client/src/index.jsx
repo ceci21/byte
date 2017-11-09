@@ -95,13 +95,13 @@ class App extends React.Component {
     };
     $.post('/login', userInput, (data) => {
       if(data[0].password === userInput.password) {
-        alert("login success")
         this.setStore({
           username: userInput.username,
-          loggedIn: true
+          loggedIn: true,
+          modalLogin: false
         })
       } else{
-        alert('login fail')
+        this.setStore({failLogin:'Incorrect password'})
       }
     })
   }
@@ -250,8 +250,7 @@ class App extends React.Component {
         >
           <LoginSubmissionForm onLoginHandler={this.onLoginHandler}/>
           <button onClick={this.closeLogin}>close</button>
-          <div>I am a modal</div>
-          <div id='login-fail'>{this.state.loginFail}</div>
+          <div id='login-fail'>{this.state.failLogin}</div>
         </Modal>
 
         <Modal
@@ -261,7 +260,6 @@ class App extends React.Component {
         >
           <SignupSubmissionForm onSignupHandler={this.onSignupHandler}/>
           <button onClick={this.closeSignup}>close</button>
-          <div>I am a modal</div>
           <div id='signup-fail'>{this.state.failSignup}</div>
         </Modal>
 
