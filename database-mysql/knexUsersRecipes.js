@@ -4,7 +4,7 @@ var knex = require('./knexSetup')
 
 UsersRecipes.getUsersRecipes = (data) => {
   console.log('USER RECIPES');
-  return knex.select().from('user_recipes');
+  return knex('users_recipes');
 }
 
 // UsersRecipes.setUsersRecipes = (data) {
