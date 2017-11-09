@@ -12,10 +12,9 @@ export default class RecipeList extends React.Component {
       return;
     }
     var table = [];
-    console.log(this.props.data);
     for (var n = 0; n < 100; n++) {
       if (this.props.data[n] !== undefined) {
-        table.push(<RecipeEntry id={n} data={this.props.data[n]} onFavoriteHandler={this.props.onFavoriteHandler} />);
+        table.push(<RecipeEntry key={"recipe-entry-" + n} value={n} data={this.props.data[n]} onFavoriteHandler={this.props.onFavoriteHandler} />);
       }
     }
     return table;

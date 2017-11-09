@@ -21,13 +21,13 @@ const RecipeEntry = (props) => {
   }
 
   var ingredientsArray = [];
+  // https://spoonacular.com/recipes/hearty-chicken-chorizo-kale-bean-and-farro-soup-474468
   if (props.data.hasOwnProperty("usedIngredients")) {
-    console.log(props.data.usedIngredients.length)
     for (var n = 0; n < props.data.usedIngredients.length; n++) {
       if (props.data.usedIngredients[n].name.length > 32) {
-        ingredientsArray.push(<li>{props.data.usedIngredients[n].name.slice(0, 32) + "..."}</li>);
+        ingredientsArray.push(<li key={'li-' + n} value={n}>{props.data.usedIngredients[n].name.slice(0, 32) + "..."}</li>);
       } else {
-        ingredientsArray.push(<li>{props.data.usedIngredients[n].name}</li>);
+        ingredientsArray.push(<li key={'li-' + n} value={n}>{props.data.usedIngredients[n].name}</li>);
       }
     }
   }
@@ -44,7 +44,7 @@ const RecipeEntry = (props) => {
 
 
   return (
-    <div className="recipe-entry" id={props.id}>
+    <div className="recipe-entry">
       <CardGroup>
         <Card>
           <Parallax className="recipe-image img-hover" bgImage={imgLink} strength={100}></Parallax>

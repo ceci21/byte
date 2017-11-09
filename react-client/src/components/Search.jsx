@@ -14,8 +14,19 @@ const Search = (props) => (
       handleAddition={null}
       handleDrag={null}/> */}
       <SearchDropdown title={props.appState.searchMode} setStore={props.setStore} className="search-dropdown" />
-    <FormControl type="text" className="search-input" type="text" onChange={(e) => {props.setStore({query: e.target.value})}} />
-    <Button inverse className="search-button" onClick={props.clickHandler}>Search</Button>
+    <FormControl type="text"
+      className="search-input"
+      type="text" onChange={ (e) => {
+        props.setStore({query: e.target.value})
+      }}
+      onKeyDown={(e) => {
+        if (e.key === 'Enter') {
+          e.preventDefault();
+          props.clickHandler(e);
+        }
+      }}
+    />
+    <Button className="search-button" onClick={props.clickHandler}>Search</Button>
    </form>
   </div>
 )

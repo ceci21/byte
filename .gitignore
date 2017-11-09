@@ -21,9 +21,10 @@ coverage
 # Compiled Dirs (http://nodejs.org/api/addons.html)
 build/
 
-# Yummly API Key
+# Yummly/Spoonacular API Key
 react-client/src/config/yummly.js
 react-client/dist/bundle.js
+react-client/src/config/spoonacular.js
 
 # Dependency directorys
 # Deployed apps should consider commenting these lines out:
