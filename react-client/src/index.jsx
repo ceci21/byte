@@ -85,6 +85,7 @@ class App extends React.Component {
     event.preventDefault();
     var favorites = this.state.userFavorites.slice();
     favorites.push(data);
+    console.log('FAVORITE DATA:', data);
     this.setState({
       userFavorites: favorites
     });
