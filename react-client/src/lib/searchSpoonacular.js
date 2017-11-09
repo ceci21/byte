@@ -1,7 +1,7 @@
 import $ from 'jquery';
 
-var apiKey = "DbYLQPD1ZGmshuSTypfqnBmQ3aZfp1uieQ6jsn4a0BqErZxQmz";
-var getUrl = "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients";
+var apiKey = null;
+var getUrl = null;
 
 var searchSpoonacular = function(options, callback) {
   var query = options.ingredients.toString();
