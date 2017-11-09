@@ -77,7 +77,6 @@ class App extends React.Component {
   }
 
   setStore(state) {
-    console.log('SET STORE');
     this.setState(state)
   }
 
@@ -88,7 +87,6 @@ class App extends React.Component {
     this.setState({
       userFavorites: favorites
     });
-    console.log('Favorites: ', favorites);
   }
 
   onLoginHandler(event) {
@@ -116,9 +114,7 @@ class App extends React.Component {
       username: event.target.username.value,
       password: event.target.password.value
     };
-    console.log('SIGNUP HANDLER');
     $.post('/signup', userInput, function(data) {
-      console.log('SIGN UP Post data: ', data);
     })
   }
 
@@ -140,22 +136,20 @@ class App extends React.Component {
       } else if (this.state.searchMode === "Loose") {
         data = matches;
       }
-      console.log('Data showing up: ', data);
+      console.log('Spoonacular found the following recipes!\n', data);
       this.setStore({data: data});
     });
   }
 
   onSearchHandler(e) {
     e.preventDefault();
-    console.log('QUERY STATE: ', this.state.query);
+    console.log('Here is your search query: ', this.state.query);
     var options = {};
 
     options.ingredients = this.state.query.split(", ");
     var queryArray = options.ingredients;
-    console.log('Query Array', queryArray);
 
     searchSpoonacular(options, (matches) => {
-      console.log(matches);
       var resultsArray = [];
       for (var i = 0; i < matches.length; i++) {
         var currentMatchIngredientsArray = matches[i].usedIngredients;

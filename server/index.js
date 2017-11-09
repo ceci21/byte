@@ -25,11 +25,11 @@ app.get('/', function(req, res) {
 app.get('/users', function (req, res) {
   Users.getUsers()
     .then((data) => {//data is an array of users and their passwords
-      console.log('THIS is the USER data: ', data);
+      console.log('Here is the user data: ', data);
       res.json(data)
     })
     .catch((err) => {
-      console.log('Something went wrong: ', err)
+      console.log('Something went wrong while retrieving users: ', err)
       res.status(500).end()
     })
 });
@@ -37,11 +37,11 @@ app.get('/users', function (req, res) {
 app.get('/recipes', function(req, res) {
   Recipes.getRecipes()
     .then((data) => {
-      console.log('RECIPES: ', data);
+      console.log('Here are your recipes:', data);
       res.json(data)
     })
     .catch( (err) => {
-      console.log('Recipes error: ', err);
+      console.log('Something went wrong while retrieving recipes: ', err);
       res.status(500).end()
     })
 });

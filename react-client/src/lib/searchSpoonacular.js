@@ -1,13 +1,11 @@
 import $ from 'jquery';
-
-var apiKey = null;
-var getUrl = null;
+import Keys from '../config/spoonacular.js';
 
 var searchSpoonacular = function(options, callback) {
   var query = options.ingredients.toString();
   console.log("Query: ", query);
     $.ajax({
-       url: getUrl,
+       url: "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/recipes/findByIngredients",
        type: "GET",
        data: {
          ingredients: query,
@@ -16,13 +14,12 @@ var searchSpoonacular = function(options, callback) {
          number: 100,
          onlyOpenLicense: false
        },
-       headers: {'X-Mashape-Key': apiKey},
+       headers: {'X-Mashape-Key': Keys.APP_KEY},
        success: function(data) {
-         console.log('Data: ', data);
          callback(data);
        },
        error: function(err) {
-         console.log('Error: ', err);
+         console.log('The following error occured while retrieving your recipes from Spoonacular: ', err);
        }
     });
 }

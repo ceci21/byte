@@ -18,13 +18,11 @@ export default class Example extends React.Component {
 
   render() {
     return (
-      <DropdownButton title={this.props.title}>
+      <DropdownButton title={this.props.title} id={"search-dropdown-button"}>
         <MenuItem onClick={() => {
-          console.log('Strict mode');
           this.props.setStore({searchMode: 'Strict'})}} eventKey="1">Strict
         </MenuItem>
         <MenuItem onClick={() => {
-          console.log('Loose mode');
           this.props.setStore({searchMode: 'Loose'})}} eventKey="1">Loose
         </MenuItem>
       </DropdownButton>
