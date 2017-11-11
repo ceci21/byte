@@ -63,8 +63,6 @@ app.get('/favorites', function(req, res) {
 });
 
 app.post('/login', function(req, res, next) {
-  console.log('POST: login');
-  console.log(req.body);
   Users.getUser(req.body)
     .then((data) => {
       console.log('USER POST DATA', data);
