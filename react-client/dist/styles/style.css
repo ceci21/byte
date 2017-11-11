@@ -137,6 +137,14 @@ a:active {
   color: #f46842;
 }
 
+#signup-fail {
+  color: #f46842;
+}
+
+#login-fail {
+  color: #f46842;
+}
+
 
 @media only screen and (max-width: 960px) {
 

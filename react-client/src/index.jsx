@@ -43,29 +43,26 @@ class App extends React.Component {
       view: 'home',
       modalLogin: false,
       modalIsOpen: true,
-      modalSignup: false
+      modalSignup: false,
+      failLogin: '',
+      failSignup: ''
     }
 
     this.setStore = this.setStore.bind(this);
     this.onSearchHandler = this.onSearchHandler.bind(this);
     this.onSearchHandler2 = this.onSearchHandler2.bind(this);
     this.onLoginHandler = this.onLoginHandler.bind(this);
+    this.onSignupHandler = this.onSignupHandler.bind(this);
     this.onFavoriteHandler = this.onFavoriteHandler.bind(this);
     this.modalLogin = this.modalLogin.bind(this);
     this.modalSignup = this.modalSignup.bind(this);
     this.openModal = this.openModal.bind(this);
-    this.afterOpenModal = this.afterOpenModal.bind(this);
     this.closeLogin = this.closeLogin.bind(this);
     this.closeSignup = this.closeSignup.bind(this);
   }
 
   openModal() {
     this.setState({modalIsOpen: true});
-  }
-
-  afterOpenModal() {
-    // references are now sync'd and can be accessed.
-    // this.subtitle.style.color = '#f00';
   }
 
   closeLogin() {
@@ -98,13 +95,13 @@ class App extends React.Component {
     };
     $.post('/login', userInput, (data) => {
       if(data[0].password === userInput.password) {
-        alert("login success")
         this.setStore({
           username: userInput.username,
-          loggedIn: true
+          loggedIn: true,
+          modalLogin: false
         })
       } else{
-        alert('login fail')
+        this.setStore({failLogin:'Incorrect password'})
       }
     })
   }
@@ -115,8 +112,23 @@ class App extends React.Component {
       username: event.target.username.value,
       password: event.target.password.value
     };
-    $.post('/signup', userInput, function(data) {
+    var found = false;
+    console.log('this outside GET', this);
+    $.get('/users', (data) => {
+      console.log('this IN GET', this);
+
+      data.forEach( (user) => {
+        if(user.name === userInput.username) {
+          found = true;
+        }
+      })
+      if(!found) {
+        $.post('/signup', userInput, (data) => {})
+      } else {
+        this.setStore({failSignup: 'Username already exists'})
+      }
     })
+
   }
 
   onSearchHandler2(e) {
@@ -238,7 +250,7 @@ class App extends React.Component {
         >
           <LoginSubmissionForm onLoginHandler={this.onLoginHandler}/>
           <button onClick={this.closeLogin}>close</button>
-          <div>I am a modal</div>
+          <div id='login-fail'>{this.state.failLogin}</div>
         </Modal>
 
         <Modal
@@ -248,7 +260,7 @@ class App extends React.Component {
         >
           <SignupSubmissionForm onSignupHandler={this.onSignupHandler}/>
           <button onClick={this.closeSignup}>close</button>
-          <div>I am a modal</div>
+          <div id='signup-fail'>{this.state.failSignup}</div>
         </Modal>
 
         <Search clickHandler={this.onSearchHandler2} setStore={this.setStore} appState={this.state}/>

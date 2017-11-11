@@ -32,3 +32,4 @@ react-client/src/config/spoonacular.js
 node_modules/
 bower_components/
 react-client/dist/bundle.js
+.env
