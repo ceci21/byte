@@ -97,6 +97,8 @@ app.post('/favorite', function(req, res, next) {
   console.log(req.body);
 })
 
-app.listen(3000, function() {
-  console.log('listening on port 3000!');
+var PORT = process.env.PORT || 3000
+
+app.listen(PORT, function() {
+  console.log('listening on port: ', PORT);
 });
