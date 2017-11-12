@@ -2,6 +2,7 @@ body {
   font-size: 16px;
   background-color: white;
   overflow-x: hidden;
+  font-family: "Roboto";
 }
 
 a {
@@ -9,7 +10,7 @@ a {
 }
 
 a:hover {
-  color: #2d2d2d;
+  color: #707070;
   text-decoration: none;
 }
 
@@ -19,12 +20,12 @@ a:visited {
 }
 
 a:hover {
-  color: #2d2d2d;
+  color: #707070;
   text-decoration: none;
 }
 
 a:active {
-  color: #2d2d2d;
+  color: #707070;
   text-decoration: none;
 }
 
@@ -100,7 +101,7 @@ a:active {
   background-color: #f4f4f4;
   font-family: "Rozha One";
   text-align: center;
-  font-size: 1.4em;
+  font-size: 2em;
 }
 
 .recipe-ingredients {
@@ -114,17 +115,17 @@ a:active {
 }
 
 .recipe-ingredients {
-  padding-left: 3em;
+  padding-left: 1em;
 }
 
 .recipe-favorite {
-  text-align: center;
-  font-size: 2em;
+  text-align: right;
+  font-size: 4em;
 }
 
 .recipe-favorite:hover {
   text-align: center;
-  font-size: 2em;
+  font-size: 4em;
   color: red;
 }
 

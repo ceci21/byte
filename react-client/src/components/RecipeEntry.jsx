@@ -39,14 +39,14 @@ const RecipeEntry = (props) => {
         <Card style={{"border":"1px solid #cccccc", "padding": "1em", "margin":"2em 0em 2em 0em", "margin-top": "2em"}}>
           <a href={recipeUrl}><Parallax className="recipe-image img-hover" bgImage={imgLink} strength={100}></Parallax></a>
           <CardBody>
-            <div style={{"display":"flex", "flex-direction":"column", "height": "10em"}}>
-              <div style={{"flex": "1"}}>
+            <div style={{"display":"flex", "flex-direction":"column", "height": "15em"}}>
+              <div style={{"flex": "grow"}}>
                 <a href={recipeUrl}>
                   <CardTitle className="recipe-title">{title}</CardTitle>
                 </a>
               </div>
-              <div style={{"flex": "1"}}>
-              <CardText className="recipe-ingredients">{ingredientsArray.map((element, index) => {
+              <div style={{"flex": "1", "max-height":"8em", "overflow-y":"hidden"}}>
+              <CardText className="recipe-ingredients" style={{"font-size": "1em", "max-height":"2em"}}>{ingredientsArray.map((element, index) => {
                 return element;
               })}</CardText>
               </div>
