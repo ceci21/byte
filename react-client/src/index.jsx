@@ -214,9 +214,17 @@ class App extends React.Component {
   }
 
   modalSignup() {
-    this.setState({
-      modalSignup: true
-    })
+    console.log('modal sign up');
+    if(this.state.loggedIn) {
+      this.setState({
+        loggedIn: false,
+        username: null
+      })
+    } else {
+      this.setState({
+        modalSignup: true
+      })
+    }
   }
 
   homeView() {

@@ -25,7 +25,6 @@ app.get('/', function(req, res) {
 app.get('/users', function (req, res) {
   Users.getUsers()
     .then((data) => {//data is an array of users and their passwords
-      console.log('Here is the user data: ', data);
       res.json(data)
     })
     .catch((err) => {
@@ -37,7 +36,6 @@ app.get('/users', function (req, res) {
 app.get('/recipes', function(req, res) {
   Recipes.getRecipes()
     .then((data) => {
-      console.log('Here are your recipes:', data);
       res.json(data)
     })
     .catch( (err) => {
@@ -65,7 +63,6 @@ app.get('/favorites', function(req, res) {
 app.post('/login', function(req, res, next) {
   Users.getUser(req.body)
     .then((data) => {
-      console.log('USER POST DATA', data);
       res.send(data).status(201);
     })
     .catch( (err) => {
@@ -80,7 +77,6 @@ app.post('/login', function(req, res, next) {
 });
 
 app.post('/signup', function(req, res) {
-  console.log("SIGNUP post: ", req.body);
   Users.addUser(req.body)
     .then((data) => {
       res.send(data).status(201)
@@ -93,7 +89,6 @@ app.post('/signup', function(req, res) {
 });
 
 app.post('/favorite', function(req, res, next) {
-  console.log('POST: favorite');
   console.log(req.body);
 })
 
