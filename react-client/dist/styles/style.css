@@ -163,3 +163,25 @@ a:active {
     }
 
 }
+
+div.ReactTags__selected span.ReactTags__tag {
+  border: 1px solid #B8B9BA;
+   border-radius: 5px;
+   background-color: transparent;
+   padding: 5px 5px 5px 10px;
+   margin: 2px;
+   display: inline-block;
+}
+
+div.ReactTags__tagInput input.ReactTags__tagInputField {
+    height: 31px;
+    margin: 0;
+    font-size: 12px;
+    width: 100%;
+    border: 1px solid #eee;
+}
+div.ReactTags__tagInput {
+    width: 200px;
+    border-radius: 2px;
+    display: inline-block;
+}

@@ -46,7 +46,7 @@ class App extends React.Component {
       modalSignup: false,
       failLogin: '',
       failSignup: '',
-      tags: [{id: 1, text: "hello"}, {id: 2, text:"goodbye"}]
+      tags: [{id: 1, text: "salt  "}, {id: 2, text:"pepper  "}]
     }
 
     this.setStore = this.setStore.bind(this);
@@ -61,6 +61,7 @@ class App extends React.Component {
     this.closeLogin = this.closeLogin.bind(this);
     this.closeSignup = this.closeSignup.bind(this);
     this.handleTagAdd = this.handleTagAdd.bind(this);
+    this.handleTagDelete = this.handleTagDelete.bind(this);
 
   }
 
@@ -250,13 +251,19 @@ class App extends React.Component {
 
   handleTagAdd(tag) {
     console.log('tag add: ', tag);
+    tag = tag + '  '
     var tags = this.state.tags.slice()
     var tagId = tags.length+1
     tags.push({id:tagId, text:tag})
     console.log('TAGS: ',tags);
     this.setStore({tags:tags})
+  }
 
-
+  handleTagDelete(tag) {
+    console.log('TAG to delete: ', tag);
+    var tags = this.state.tags.slice()
+    tags.splice(tag,1)
+    this.setStore({tags:tags})
   }
 
   homeView() {
@@ -303,7 +310,7 @@ class App extends React.Component {
           <div id='signup-fail'>{this.state.failSignup}</div>
         </Modal>
 
-        <Search clickHandler={this.onSearchHandler2} handleTagAdd={this.handleTagAdd} tags={this.state.tags} setStore={this.setStore} appState={this.state}/>
+        <Search clickHandler={this.onSearchHandler2} handleTagDelete={this.handleTagDelete} handleTagAdd={this.handleTagAdd} tags={this.state.tags} setStore={this.setStore} appState={this.state}/>
         <RecipeList data={this.state.data} onFavoriteHandler={this.onFavoriteHandler}/>
       </div>
     </div>);
