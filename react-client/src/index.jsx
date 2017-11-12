@@ -35,7 +35,7 @@ class App extends React.Component {
     this.state = {
       items: [],
       query: '',
-      data: SAMPLE_DATA,
+      data: [],
       searchMode: "Loose",
       username: null,
       loggedIn: false,
@@ -45,7 +45,8 @@ class App extends React.Component {
       modalIsOpen: true,
       modalSignup: false,
       failLogin: '',
-      failSignup: ''
+      failSignup: '',
+      tags: [{id: 1, text: "salt  "}, {id: 2, text:"pepper  "}]
     }
 
     this.setStore = this.setStore.bind(this);
@@ -59,6 +60,9 @@ class App extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.closeLogin = this.closeLogin.bind(this);
     this.closeSignup = this.closeSignup.bind(this);
+    this.handleTagAdd = this.handleTagAdd.bind(this);
+    this.handleTagDelete = this.handleTagDelete.bind(this);
+
   }
 
   openModal() {
@@ -93,15 +97,24 @@ class App extends React.Component {
       username: event.target.username.value,
       password: event.target.password.value
     };
+    if( userInput.username === '') {
+      this.setStore({failLogin:'Username field cannot be empty'})
+      return;
+    }
     $.post('/login', userInput, (data) => {
-      if(data[0].password === userInput.password) {
-        this.setStore({
-          username: userInput.username,
-          loggedIn: true,
-          modalLogin: false
-        })
-      } else{
-        this.setStore({failLogin:'Incorrect password'})
+      console.log('user data: ', data);
+      if(data.length !== 0) {
+        if(data[0].password === userInput.password) {
+          this.setStore({
+            username: userInput.username,
+            loggedIn: true,
+            modalLogin: false
+          })
+        } else{
+          this.setStore({failLogin:'Incorrect password'})
+        }
+      } else {
+        this.setStore({failLogin:'Username does not exist'})
       }
     })
   }
@@ -112,6 +125,13 @@ class App extends React.Component {
       username: event.target.username.value,
       password: event.target.password.value
     };
+    if( userInput.username === '') {
+      this.setStore({failSignup:'Username field cannot be empty'})
+      return;
+    } else if (userInput.password === '') {
+      this.setStore({failSignup:'Password must be at least one character'})
+      return;
+    }
     var found = false;
     console.log('this outside GET', this);
     $.get('/users', (data) => {
@@ -209,6 +229,7 @@ class App extends React.Component {
 
   modalLogin() {
     this.setState({
+      modalSignup: false,
       modalLogin: true
     })
   }
@@ -222,9 +243,27 @@ class App extends React.Component {
       })
     } else {
       this.setState({
+        modalLogin: false,
         modalSignup: true
       })
     }
+  }
+
+  handleTagAdd(tag) {
+    console.log('tag add: ', tag);
+    tag = tag + '  '
+    var tags = this.state.tags.slice()
+    var tagId = tags.length+1
+    tags.push({id:tagId, text:tag})
+    console.log('TAGS: ',tags);
+    this.setStore({tags:tags})
+  }
+
+  handleTagDelete(tag) {
+    console.log('TAG to delete: ', tag);
+    var tags = this.state.tags.slice()
+    tags.splice(tag,1)
+    this.setStore({tags:tags})
   }
 
   homeView() {
@@ -271,7 +310,7 @@ class App extends React.Component {
           <div id='signup-fail'>{this.state.failSignup}</div>
         </Modal>
 
-        <Search clickHandler={this.onSearchHandler2} setStore={this.setStore} appState={this.state}/>
+        <Search clickHandler={this.onSearchHandler2} handleTagDelete={this.handleTagDelete} handleTagAdd={this.handleTagAdd} tags={this.state.tags} setStore={this.setStore} appState={this.state}/>
         <RecipeList data={this.state.data} onFavoriteHandler={this.onFavoriteHandler}/>
       </div>
     </div>);
