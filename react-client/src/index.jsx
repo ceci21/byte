@@ -60,6 +60,8 @@ class App extends React.Component {
     this.openModal = this.openModal.bind(this);
     this.closeLogin = this.closeLogin.bind(this);
     this.closeSignup = this.closeSignup.bind(this);
+    this.handleTagAdd = this.handleTagAdd.bind(this);
+
   }
 
   openModal() {
@@ -250,9 +252,10 @@ class App extends React.Component {
     console.log('tag add: ', tag);
     var tags = this.state.tags.slice()
     var tagId = tags.length+1
-    tags.push({tagId:tag})
+    tags.push({id:tagId, text:tag})
+    console.log('TAGS: ',tags);
     this.setStore({tags:tags})
-    
+
 
   }
 
