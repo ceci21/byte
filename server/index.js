@@ -92,7 +92,7 @@ app.post('/favorite', function(req, res, next) {
   console.log(req.body);
 })
 
-var PORT = process.env.PORT || 3001
+var PORT = process.env.PORT || 3000
 
 app.listen(PORT, function() {
   console.log('listening on port: ', PORT);
