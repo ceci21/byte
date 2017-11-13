@@ -9,13 +9,8 @@ const Search = (props) => (
   <form>
     <div className="search-title">So, what's in your pantry today?</div><br/>
     <ReactTags tags={props.tags}
-      // classNames={{
-      //   tags:
-      // }}
-      // suggestions={null}
       handleDelete={props.handleTagDelete}
       handleAddition={props.handleTagAdd}
-      // handleDrag={null}
     />
     <Button className="search-button" onClick={props.clickHandler}>Search</Button>
    </form>

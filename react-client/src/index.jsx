@@ -8,6 +8,7 @@ import { searchYummly } from './lib/searchYummly.js';
 import { searchSpoonacular } from './lib/searchSpoonacular.js';
 import { spoonacularTrivia } from './lib/spoonacularTrivia.js';
 import SAMPLE_DATA from './data/SAMPLE_DATA.js';
+import DEFAULT_TAGS from './data/DEFAULT_TAGS.js';
 import { Jumbotron } from 'react-bootstrap';
 import NavBar from './components/NavBar.jsx';
 import { Parallax } from 'react-parallax';
@@ -43,6 +44,7 @@ class App extends React.Component {
       data: [],
       searchMode: "Loose",
       username: null,
+      userid: null,
       loggedIn: false,
       userFavorites: [],
       view: 'home',
@@ -51,9 +53,10 @@ class App extends React.Component {
       modalSignup: false,
       failLogin: '',
       failSignup: '',
-      tags: [{id: 1, text: "salt  "}, {id: 2, text:"pepper  "}],
+      tags: DEFAULT_TAGS,
       loadingText: false,
       randomTrivia: "Did you know..."
+
     }
 
     this.setStore = this.setStore.bind(this);
@@ -86,11 +89,11 @@ class App extends React.Component {
   }
 
   closeLogin() {
-    this.setState({modalLogin: false})
+    this.setState({modalLogin: false, failLogin: ''})
   }
 
   closeSignup() {
-    this.setState({modalSignup: false})
+    this.setState({modalSignup: false, failSignup: ''})
   }
 
   setStore(state) {
@@ -121,8 +124,19 @@ class App extends React.Component {
       console.log('user data: ', data);
       if(data.length !== 0) {
         if(data[0].password === userInput.password) {
+          $.post('/useringredients', {userid:data[0].id}, (data) => {
+            console.log('INGREDIENTS: ', data);
+            var tags = this.state.tags.slice()
+            var id = tags.length+1
+            data.forEach( (ingredient) => {
+              tags.push({id:tags.length++,text:ingredient.ingredient})
+              // this.handleTagAdd(ingredient.ingredient)
+            })
+            this.setStore({tags:tags})
+          })
           this.setStore({
             username: userInput.username,
+            userid: data[0].id,
             loggedIn: true,
             modalLogin: false
           })
@@ -149,10 +163,7 @@ class App extends React.Component {
       return;
     }
     var found = false;
-    console.log('this outside GET', this);
     $.get('/users', (data) => {
-      console.log('this IN GET', this);
-
       data.forEach( (user) => {
         if(user.name === userInput.username) {
           found = true;
@@ -160,6 +171,8 @@ class App extends React.Component {
       })
       if(!found) {
         $.post('/signup', userInput, (data) => {})
+        this.closeSignup();
+        this.setStore({failLogin: 'Created, please Login', modalLogin: true})
       } else {
         this.setStore({failSignup: 'Username already exists'})
       }
@@ -261,7 +274,8 @@ class App extends React.Component {
     if(this.state.loggedIn) {
       this.setState({
         loggedIn: false,
-        username: null
+        username: null,
+        tags: DEFAULT_TAGS
       })
     } else {
       this.setState({
@@ -277,6 +291,12 @@ class App extends React.Component {
     var tags = this.state.tags.slice()
     var tagId = tags.length+1
     tags.push({id:tagId, text:tag})
+    var ingredients = {}
+    ingredients.userid = this.state.userid;
+    ingredients.ingredient = tag;
+    if(this.state.userid) {
+      $.post('/ingredients', ingredients, (data) => {} );
+    }
     console.log('TAGS: ',tags);
     this.setStore({tags:tags})
   }

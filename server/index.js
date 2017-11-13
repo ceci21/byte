@@ -6,6 +6,8 @@ var bcrypt = require('bcrypt');
 var Recipes = require('../database-mysql/knexRecipes.js')
 var Users = require('../database-mysql/knexUsers.js')
 var UsersRecipes = require('../database-mysql/knexUsersRecipes.js')
+var Ingredients = require('../database-mysql/knexIngredients.js')
+var UsersIngredients = require('../database-mysql/knexUsersIngredients.js')
 
 var app = express();
 
@@ -60,6 +62,19 @@ app.get('/favorites', function(req, res) {
   UsersRecipes.getFavorites()
 });
 
+app.post('/useringredients', (req, res) => {
+  console.log('USER INGREDIENT ID: ', req.body);
+  Ingredients.getIngredientByUser(req.body)
+  .then( (data) =>{
+    console.log('INGREDIENTS ROUTE: ', data);
+    res.send(data).status(201)
+  })
+  .catch( (err) => {
+    console.log('USER INGREDIENT ERROR: ', err);
+    res.status(500).end();
+  })
+})
+
 app.post('/login', function(req, res, next) {
   Users.getUser(req.body)
     .then((data) => {
@@ -79,17 +94,32 @@ app.post('/login', function(req, res, next) {
 app.post('/signup', function(req, res) {
   Users.addUser(req.body)
     .then((data) => {
-      res.send(data).status(201)
+      res.status(201).send(data)
     })
     .catch((err) => {
       console.log('SIGN UP error: ', err);
       res.status(500).end()
     })
-  res.end();
 });
 
 app.post('/favorite', function(req, res, next) {
   console.log(req.body);
+})
+
+app.post('/ingredients', (req, res) => {
+  console.log('Ingredient request: ', req.body);
+  Ingredients.addIngredient(req.body)
+  .then( (data) => {//data is the ingredient id in the ingredients DB table
+    UsersIngredients.addUserIngredient({userid:req.body.userid,ingredientid:data})
+    .then((data) => {
+      console.log('SUCCESS ADD USERINGREDIENT: ', data);
+      res.status(201).end()
+    })
+  })
+  .catch( (err) => {
+    console.log('Ingredient add error: ', err);
+    res.status(500).end()
+  })
 })
 
 var PORT = process.env.PORT || 3000
