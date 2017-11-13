@@ -17,7 +17,14 @@ Ingredients.addIngredient = (data) => {
 
 Ingredients.getIngredientByUser = (data) => {
   console.log('IN INGEDIENTS DB', data);
-  return knex('ingredients').where({user_id: data.userid}).select('ingredient')
+  return knex.select().from('ingredients').where({user_id: data.userid})
+}
+
+Ingredients.removeIngredient = (data) => {
+  console.log('REOMVE DB: ', data);
+  return knex('ingredients')
+  .where({user_id:data.userId,id:data.ingredientId})
+  .del()
 }
 
 
