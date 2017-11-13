@@ -86,6 +86,18 @@ app.post('/useringredients', (req, res) => {
   })
 })
 
+app.post('/removeIngredient', (req, res) => {
+  console.log('REMOVE INGREDIENT ROUTE: ', req.body);
+  Ingredients.removeIngredient(req.body)
+  .then( (data) => {
+    res.status(204).end()
+  })
+  .catch((err) => {
+    console.log('Remove Ingredient Error: ', err)
+    res.status(500).end()
+  })
+})
+
 app.post('/login', function(req, res, next) {
   Users.getUser(req.body)
     .then((data) => {
