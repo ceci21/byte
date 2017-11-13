@@ -14,7 +14,9 @@ CREATE TABLE users (
 CREATE TABLE ingredients (
   id INT  NOT NULL AUTO_INCREMENT,
   ingredient TEXT NOT NULL,
-  PRIMARY KEY(id)
+  user_id INT NOT NULL,
+  PRIMARY KEY(id),
+  FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
 CREATE TABLE recipes (

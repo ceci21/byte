@@ -108,6 +108,9 @@ class App extends React.Component {
       console.log('user data: ', data);
       if(data.length !== 0) {
         if(data[0].password === userInput.password) {
+          $.post('/ingredients', data[0].id, (data) => {
+            console.log('INGREDIENTS: ', data);
+          })
           this.setStore({
             username: userInput.username,
             userid: data[0].id,
@@ -137,10 +140,7 @@ class App extends React.Component {
       return;
     }
     var found = false;
-    console.log('this outside GET', this);
     $.get('/users', (data) => {
-      console.log('this IN GET', this);
-
       data.forEach( (user) => {
         if(user.name === userInput.username) {
           found = true;
@@ -266,9 +266,11 @@ class App extends React.Component {
     var tagId = tags.length+1
     tags.push({id:tagId, text:tag})
     var ingredients = {}
-    ingredients.userName = this.state.username;
+    ingredients.userid = this.state.userid;
     ingredients.ingredient = tag;
-    $.post('/ingredients', ingredients, (data) => {} );
+    if(this.state.userid) {
+      $.post('/ingredients', ingredients, (data) => {} );
+    }
     console.log('TAGS: ',tags);
     this.setStore({tags:tags})
   }
