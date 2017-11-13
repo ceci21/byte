@@ -4,8 +4,10 @@ const Footer = (props) => {
   return (
      <div id="myFooter">
       <div className="container">
+        <div style={{'textAlign': 'center'}}>{props.trivia}</div>
         <div className="row">
           <div className="col-sm-3">
+
             <h2 className="logo">
               <a href="#">
                 Byte!

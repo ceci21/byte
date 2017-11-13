@@ -1,9 +1,9 @@
 import $ from 'jquery';
 import Keys from '../config/spoonacular.js';
 
-var searchSpoonacular = function(callback) {
+var spoonacularTrivia = function(callback) {
     $.ajax({
-       url: "GEThttps://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/trivia/random",
+       url: "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/trivia/random",
        type: "GET",
        headers: {'X-Mashape-Key': Keys.APP_KEY},
        success: function(data) {
@@ -15,4 +15,4 @@ var searchSpoonacular = function(callback) {
     });
 }
 
-export {searchSpoonacular};
+export {spoonacularTrivia};

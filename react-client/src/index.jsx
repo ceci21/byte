@@ -51,7 +51,7 @@ class App extends React.Component {
       failSignup: '',
       tags: [{id: 1, text: "salt  "}, {id: 2, text:"pepper  "}],
       loadingText: false,
-      randomTrivia: ""
+      randomTrivia: "Did you know..."
     }
 
     this.setStore = this.setStore.bind(this);
@@ -67,7 +67,18 @@ class App extends React.Component {
     this.closeSignup = this.closeSignup.bind(this);
     this.handleTagAdd = this.handleTagAdd.bind(this);
     this.handleTagDelete = this.handleTagDelete.bind(this);
+    this.randomTrivia = this.randomTrivia.bind(this);
 
+  }
+
+  componentDidMount() {
+    this.randomTrivia();
+  }
+
+  randomTrivia() {
+    spoonacularTrivia((data) => {
+      this.setState({randomTrivia: "Did you know... " + data.text});
+    });
   }
 
   openModal() {
@@ -185,12 +196,6 @@ class App extends React.Component {
     });
   }
 
-  randomTrivia() {
-    spoonacularTrivia((data) => {
-      this.setState({randomTrivia: data});
-    });
-  }
-
   onSearchHandler(e) {
     e.preventDefault();
     console.log('Here is your search query: ', this.state.query);
@@ -291,9 +296,9 @@ class App extends React.Component {
       var username = "Not Logged In"
       var userDisplay = (
           <Parallax className="main-card" bgImage="https://i.imgur.com/hpz3tXZ.jpg" strength={400}>
-            <div style={{'display':'flex', 'align-items':'center', 'flex-direction':'column', 'height':'100vh'}}>
+            <div style={{'display':'flex', 'alignItems':'center', 'flexDirection':'column', 'height':'100vh'}}>
               <div style={{'flex':'1'}}/>
-              <div style={{'flex': '1'}}><h1 className="subtitle">Why run to the grocery store when you have all the ingredients you need at home? Here at Byte, we help you see the potential of your pantry.</h1></div>
+              <div style={{'flex': '1'}}><h1 className="subtitle"><div>Why run to the grocery store when you have all the ingredients you need at home? Here at Byte, we help you see the potential of your pantry.</div></h1></div>
               <div style={{'flex':'1'}}/>
             </div>
           </Parallax>
@@ -304,7 +309,7 @@ class App extends React.Component {
     <div>
       <NavBar setStore={this.setStore} modalSignup={this.modalSignup} modalLogin={this.modalLogin} username={this.state.username} loggedIn={this.state.loggedIn} />
       {userDisplay}
-      <div className="main">
+      <div className="container">
         <Modal
           isOpen={this.state.modalLogin}
           style={customStyles}
@@ -350,7 +355,7 @@ class App extends React.Component {
     return (
       <div>
         {view}
-        <Footer />
+        <Footer trivia={this.state.randomTrivia}/>
       </div>
     );
   }
