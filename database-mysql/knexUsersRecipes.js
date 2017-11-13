@@ -7,6 +7,7 @@ UsersRecipes.getUsersRecipes = (data) => {
   return knex('users_recipes');
 }
 
+
 // UsersRecipes.setUsersRecipes = (data) {
 //   return knex.insert([{title: 'Great Gatsby'}, {title: 'Fahrenheit 451'}], 'id').into('books')
 // }

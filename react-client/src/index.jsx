@@ -135,12 +135,26 @@ class App extends React.Component {
             })
             this.setState({tags:tags})
           })
+
           this.setState({
             username: userInput.username,
             userid: data[0].id,
             loggedIn: true,
             modalLogin: false
           })
+
+          $.post('/userfavorites', {user_id:this.state.userid}, (data) => {
+            console.log('GET FAVORITES', data);
+            var results = [];
+            for (var i = 0; i < data.length; i++) {
+
+              results.push(JSON.parse(data[i].recipe));
+
+            }
+            this.setState({userFavorites: results});
+            console.log('user favorites now equal to ', this.state.userFavorites);
+          })
+
         } else{
           this.setState({failLogin:'Incorrect password'})
         }
