@@ -7,11 +7,10 @@ class LoadingText extends React.Component{
       ellipse: 1
     };
     this.switchText = this.switchText.bind(this);
-    this.interval = setInterval.bind(this, this.switchText, 250);
   }
 
   componentWillMount() {
-    this.interval();
+    setTimeout(this.switchText, 250);
   }
 
   switchText() {
@@ -19,7 +18,7 @@ class LoadingText extends React.Component{
   }
 
   componentWillUnmount() {
-    clearInterval(this.interval);
+    clearTimeout(this.switchText);
   }
 
   render() {

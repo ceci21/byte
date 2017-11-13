@@ -65,18 +65,13 @@ class App extends React.Component {
     }
 
     // Method bindings
-    // this.closeLogin = this.closeLogin.bind(this);
-    // this.closeSignup = this.closeSignup.bind(this);
     this.handleTagAdd = this.handleTagAdd.bind(this);
     this.handleTagDelete = this.handleTagDelete.bind(this);
-    this.modalLogin = this.modalLogin.bind(this);
     this.modalSignup = this.modalSignup.bind(this);
     this.onSearchHandler = this.onSearchHandler.bind(this);
-    this.onSearchHandler2 = this.onSearchHandler2.bind(this);
     this.onFavoriteHandler = this.onFavoriteHandler.bind(this);
     this.onLoginHandler = this.onLoginHandler.bind(this);
     this.onSignupHandler = this.onSignupHandler.bind(this);
-    // this.openModal = this.openModal.bind(this);
     this.randomTrivia = this.randomTrivia.bind(this);
     this.setStore = this.setStore.bind(this);
 
@@ -111,7 +106,7 @@ class App extends React.Component {
       password: event.target.password.value
     };
     if( userInput.username === '') {
-      this.setStore({failLogin:'Username field cannot be empty'})
+      this.setState({failLogin:'Username field cannot be empty'})
       return;
     }
     $.post('/login', userInput, (data) => {
@@ -124,19 +119,19 @@ class App extends React.Component {
               tags.push({id:tags.length++,text:ingredient.ingredient})
               // this.handleTagAdd(ingredient.ingredient)
             })
-            this.setStore({tags:tags})
+            this.setState({tags:tags})
           })
-          this.setStore({
+          this.setState({
             username: userInput.username,
             userid: data[0].id,
             loggedIn: true,
             modalLogin: false
           })
         } else{
-          this.setStore({failLogin:'Incorrect password'})
+          this.setState({failLogin:'Incorrect password'})
         }
       } else {
-        this.setStore({failLogin:'Username does not exist'})
+        this.setState({failLogin:'Username does not exist'})
       }
     })
   }
@@ -148,10 +143,10 @@ class App extends React.Component {
       password: event.target.password.value
     };
     if( userInput.username === '') {
-      this.setStore({failSignup:'Username field cannot be empty'})
+      this.setState({failSignup:'Username field cannot be empty'})
       return;
     } else if (userInput.password === '') {
-      this.setStore({failSignup:'Password must be at least one character'})
+      this.setState({failSignup:'Password must be at least one character'})
       return;
     }
     var found = false;
@@ -163,16 +158,16 @@ class App extends React.Component {
       })
       if(!found) {
         $.post('/signup', userInput, (data) => {})
-        this.closeSignup();
-        this.setStore({failLogin: 'Created, please Login', modalLogin: true})
+        // this.closeSignup();
+        this.setState({failLogin: 'Created, please Login', modalLogin: true, modalSignup: false})
       } else {
-        this.setStore({failSignup: 'Username already exists'})
+        this.setState({failSignup: 'Username already exists'})
       }
     })
 
   }
 
-  onSearchHandler2(e) {
+  onSearchHandler(e) {
     e.preventDefault();
     var options = {};
     // options.ingredients = this.state.query.split(", ");
@@ -182,7 +177,7 @@ class App extends React.Component {
     })
     options.ingredients = tags;
     var queryArray = options.ingredients;
-    this.setStore({loadingText: true});
+    this.setState({loadingText: true});
     searchSpoonacular(options, (matches) => {
       var data = [];
       if (this.state.searchMode === "Strict") {
@@ -194,49 +189,7 @@ class App extends React.Component {
       } else if (this.state.searchMode === "Loose") {
         data = matches;
       }
-      this.setStore({data: data, loadingText: false});
-    });
-  }
-
-  onSearchHandler(e) {
-    e.preventDefault();
-    var options = {};
-
-    options.ingredients = this.state.query.split(", ");
-    var queryArray = options.ingredients;
-
-    searchSpoonacular(options, (matches) => {
-      var resultsArray = [];
-      for (var i = 0; i < matches.length; i++) {
-        var currentMatchIngredientsArray = matches[i].usedIngredients;
-        if (currentMatchIngredientsArray.length > queryArray.length) {
-          continue;
-        }
-        var isMatch = true;
-        for (var j = 0; j < currentMatchIngredientsArray.length; j++) {
-            var currentIngredientMashed = currentMatchIngredientsArray[j].split(' ').join('');
-            var isFound = false;
-            for (var k = 0; k < queryArray.length; k++) {
-              var queryIngredientMashed = queryArray[k].split(' ').join('');
-              if (currentIngredientMashed.includes(queryIngredientMashed)) {
-                isFound = true;
-                break;
-              }
-            }
-            if (!isFound) {
-              isMatch = false;
-              break;
-            }
-        }
-        if (isMatch) {
-          resultsArray.push(matches[i]);
-        }
-      }
-      if (this.state.searchMode === "Strict") {
-        this.setState({data: resultsArray});
-      } else if (this.state.searchMode === "Loose") {
-        this.setState({data: matches});
-      }
+      this.setState({data: data, loadingText: false});
     });
   }
 
@@ -250,12 +203,12 @@ class App extends React.Component {
     );
   }
 
-  modalLogin() {
-    this.setState({
-      modalSignup: false,
-      modalLogin: true
-    })
-  }
+  // modalLogin() {
+  //   this.setState({
+  //     modalSignup: false,
+  //     modalLogin: true
+  //   })
+  // }
 
   modalSignup() {
     if(this.state.loggedIn) {
@@ -283,13 +236,13 @@ class App extends React.Component {
     if(this.state.userid) {
       $.post('/ingredients', ingredients, (data) => {} );
     }
-    this.setStore({tags:tags})
+    this.setState({tags:tags})
   }
 
   handleTagDelete(tag) {
     var tags = this.state.tags.slice()
     tags.splice(tag,1)
-    this.setStore({tags:tags})
+    this.setState({tags:tags})
   }
 
   homeView() {
@@ -311,7 +264,7 @@ class App extends React.Component {
 
     return (
     <div>
-      <NavBar setStore={this.setStore} modalSignup={this.modalSignup} modalLogin={this.modalLogin} username={this.state.username} loggedIn={this.state.loggedIn} />
+      <NavBar setStore={this.setStore} modalSignup={this.modalSignup} username={this.state.username} loggedIn={this.state.loggedIn} />
       {userDisplay}
       <div className="container">
         <Modal
@@ -334,7 +287,7 @@ class App extends React.Component {
           <SignupSubmissionForm setStore={this.setStore} onSignupHandler={this.onSignupHandler}/>
           <div id='signup-fail'>{this.state.failSignup}</div>
         </Modal>
-        <Search clickHandler={this.onSearchHandler2} handleTagDelete={this.handleTagDelete} handleTagAdd={this.handleTagAdd} tags={this.state.tags} setStore={this.setStore} appState={this.state}/>
+        <Search clickHandler={this.onSearchHandler} handleTagDelete={this.handleTagDelete} handleTagAdd={this.handleTagAdd} tags={this.state.tags} setStore={this.setStore} appState={this.state}/>
         {(this.state.loadingText) ? (<LoadingText />) : null}
         <RecipeList data={this.state.data} onFavoriteHandler={this.onFavoriteHandler}/>
       </div>
