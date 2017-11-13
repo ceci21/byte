@@ -3,7 +3,10 @@ var Recipes = {};
 var knex = require('./knexSetup')
 
 Recipes.getRecipes = (data) => {
-  return knex.select().from('recipes')
+	console.log('Now we in recipes.getrecipes', data);
+  return knex('recipes').where({
+  	user_id: data
+  }).select('recipe')
 }
 
 Recipes.addRecipe = (data) => {
@@ -17,3 +20,9 @@ Recipes.addRecipe = (data) => {
 }
 
 module.exports = Recipes;
+
+
+// knex('users').where({
+//   first_name: 'Test',
+//   last_name:  'User'
+// }).select('id')
