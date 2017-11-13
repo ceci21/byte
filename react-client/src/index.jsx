@@ -270,8 +270,6 @@ class App extends React.Component {
         <Modal
           isOpen={this.state.modalLogin}
           style={customStyles}
-          // onAfterOpen={this.afterOpenModal} this is here to show that this onAfterOpen method is available
-          // onRequestClose={this.closeModal} this is here to show that this onAfterOpen method is available
           contentLabel="login"
         >
           <LoginSubmissionForm setStore={this.setStore} onLoginHandler={this.onLoginHandler}/>
