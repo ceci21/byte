@@ -46,6 +46,12 @@ a:active {
   height: 100vh;
 }
 
+.loading-text {
+  font-family: "Rozha One", serif;
+  text-align: center;
+  font-size: 2em;
+}
+
 .title {
   font-family: "Rozha One", serif;
   font-size: 2em;
