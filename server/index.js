@@ -75,6 +75,18 @@ app.post('/useringredients', (req, res) => {
   })
 })
 
+app.post('/removeIngredient', (req, res) => {
+  console.log('REMOVE INGREDIENT ROUTE: ', req.body);
+  Ingredients.removeIngredient(req.body)
+  .then( (data) => {
+    res.status(204).end()
+  })
+  .catch((err) => {
+    console.log('Remove Ingredient Error: ', err)
+    res.status(500).end()
+  })
+})
+
 app.post('/login', function(req, res, next) {
   Users.getUser(req.body)
     .then((data) => {
@@ -102,8 +114,17 @@ app.post('/signup', function(req, res) {
     })
 });
 
-app.post('/favorite', function(req, res, next) {
+app.post('/favorites', function(req, res, next) {
   console.log(req.body);
+  console.log('DETECTED IN APP.POST', req.body);
+  Recipes.addRecipe(req.body)
+    .then((data) => {
+      res.send(data).status(201);
+    })
+    .catch((err) => {
+      console.log('Recipe error', err);
+      res.status(500).end()
+    })
 })
 
 app.post('/ingredients', (req, res) => {

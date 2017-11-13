@@ -28,7 +28,6 @@ import Modal from 'react-modal';
 
 const SERVER_URL = "http://127.0.0.1:3000";
 
-// Refactor with modals
 const customStyles = {
   content : {
     top                   : '50%',
@@ -94,9 +93,23 @@ class App extends React.Component {
     event.preventDefault();
     var favorites = this.state.userFavorites.slice();
     favorites.push(data);
+    var favoriteRecipe = data;
     this.setState({
       userFavorites: favorites
     });
+    //UsersRecipes.addFavorites
+    alert('Added to favorites!');
+    console.log('Username is ', this.state.username);
+    var favorite = {
+      recipe: data, 
+      user_id: this.state.userid
+    };
+
+    
+    $.post('/favorites', favorite, (result) => {
+    console.log('POST REQUEST DETECTED');
+    });
+   
   }
 
   onLoginHandler(event) {
@@ -116,7 +129,8 @@ class App extends React.Component {
             var tags = this.state.tags.slice()
             var id = tags.length+1
             data.forEach( (ingredient) => {
-              tags.push({id:tags.length++,text:ingredient.ingredient})
+              console.log();
+              tags.push({id:tags.length++,text:ingredient.ingredient, ingredient_id:ingredient.id})
               // this.handleTagAdd(ingredient.ingredient)
             })
             this.setState({tags:tags})
@@ -241,7 +255,12 @@ class App extends React.Component {
 
   handleTagDelete(tag) {
     var tags = this.state.tags.slice()
-    tags.splice(tag,1)
+    tags.splice(tag,1);
+    var removeIngredient = tags.splice(tag,1)
+    var removeUserIngredient = { userId:this.state.userid, ingredientId:removeIngredient[0].ingredient_id,}
+    if(this.state.userid) {
+      $.post('/removeIngredient', removeUserIngredient, (data) => {})
+    }
     this.setState({tags:tags})
   }
 
