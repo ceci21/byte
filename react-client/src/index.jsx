@@ -16,6 +16,8 @@ import SignupSubmissionForm from './components/SignupSubmissionForm.jsx';
 import Modal from 'react-modal';
 import LoadingText from './components/LoadingText.jsx';
 import Footer from './components/Footer.jsx';
+import { Button } from 'react-bootstrap';
+import TiTimes from 'react-icons/lib/ti/times';
 
 const SERVER_URL = "http://127.0.0.1:3000";
 
@@ -289,9 +291,9 @@ class App extends React.Component {
   homeView() {
     if (this.state.loggedIn) {
       var username = this.state.username;
-      var userDisplay = null;
+      var userDisplay = <div style={{'paddingTop':'25vh'}}/>;
     } else {
-      var username = "Not Logged In"
+      var username = "Not Logged In";
       var userDisplay = (
           <Parallax className="main-card" bgImage="https://i.imgur.com/hpz3tXZ.jpg" strength={400}>
             <div style={{'display':'flex', 'alignItems':'center', 'flexDirection':'column', 'height':'100vh'}}>
@@ -314,9 +316,8 @@ class App extends React.Component {
           // onAfterOpen={this.afterOpenModal} this is here to show that this onAfterOpen method is available
           // onRequestClose={this.closeModal} this is here to show that this onAfterOpen method is available
           contentLabel="login"
-        >
+        > <a className="close-button" onClick={this.closeLogin}><TiTimes /></a>
           <LoginSubmissionForm onLoginHandler={this.onLoginHandler}/>
-          <button onClick={this.closeLogin}>close</button>
           <div id='login-fail'>{this.state.failLogin}</div>
         </Modal>
 
@@ -325,11 +326,10 @@ class App extends React.Component {
           contentLabel="signup"
           style={customStyles}
         >
+          <a className="close-button" onClick={this.closeSignup}><TiTimes /></a>
           <SignupSubmissionForm onSignupHandler={this.onSignupHandler}/>
-          <button onClick={this.closeSignup}>close</button>
           <div id='signup-fail'>{this.state.failSignup}</div>
         </Modal>
-
         <Search clickHandler={this.onSearchHandler2} handleTagDelete={this.handleTagDelete} handleTagAdd={this.handleTagAdd} tags={this.state.tags} setStore={this.setStore} appState={this.state}/>
         {(this.state.loadingText) ? (<LoadingText />) : null}
         <RecipeList data={this.state.data} onFavoriteHandler={this.onFavoriteHandler}/>

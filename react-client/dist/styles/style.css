@@ -172,6 +172,23 @@ a:active {
 
 }
 
+.input-field {
+  display: block;
+  margin: .5em;
+  margin-right: .3em;
+}
+
+.close-button {
+  float: right;
+  font-size: 1.5em;
+  padding-bottom: 1em;
+}
+
+.close-button:hover {
+  cursor: pointer;
+
+}
+
 div.ReactTags__selected span.ReactTags__tag {
   border: 1px solid #B8B9BA;
    border-radius: 5px;

@@ -2,7 +2,7 @@ import React from 'react';
 
 const Footer = (props) => {
   return (
-     <div id="myFooter">
+     <div id="myFooter" >
       <div className="container">
         <div style={{'textAlign': 'center'}}>{props.trivia}</div>
         <div className="row">

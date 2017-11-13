@@ -5,7 +5,7 @@ var spoonacularTrivia = function(callback) {
     $.ajax({
        url: "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/trivia/random",
        type: "GET",
-       headers: {'X-Mashape-Key': Keys.APP_KEY},
+       headers: {'X-Mashape-Key': 'DbYLQPD1ZGmshuSTypfqnBmQ3aZfp1uieQ6jsn4a0BqErZxQmz'},
        success: function(data) {
          callback(data);
        },
