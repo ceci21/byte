@@ -104,6 +104,12 @@ a:active {
   max-height: 10em;
 }
 
+.submission-form {
+  text-align: "center";
+  padding-top: "2em";
+  padding-bottom: "2em";
+}
+
 .recipe-title {
   background-color: #f4f4f4;
   font-family: "Rozha One";
