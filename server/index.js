@@ -6,7 +6,7 @@ var bcrypt = require('bcrypt');
 var Recipes = require('../database-mysql/knexRecipes.js')
 var Users = require('../database-mysql/knexUsers.js')
 var UsersRecipes = require('../database-mysql/knexUsersRecipes.js')
-
+var Ingredients = require('../database-mysql/knexIngredients.js')
 var app = express();
 
 app.use(bodyParser.json());
@@ -90,6 +90,19 @@ app.post('/signup', function(req, res) {
 
 app.post('/favorite', function(req, res, next) {
   console.log(req.body);
+})
+
+app.post('/ingredients', (req, res) => {
+  console.log('Ingredient request: ', req.body);
+  Ingredients.addIngredient(req.body)
+  .then( (data) => {
+    console.log('SUCCESS ADD INGREDIENT');
+    res.status(201).end()
+  })
+  .catch( (err) => {
+    console.log('Ingredient add error: ', err);
+    res.status(500).end()
+  })
 })
 
 var PORT = process.env.PORT || 3000

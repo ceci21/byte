@@ -9,13 +9,8 @@ const Search = (props) => (
   <form>
     <div className="search-title">So, what's in your pantry today?</div><br/>
     <ReactTags tags={props.tags}
-      // classNames={{
-      //   tags:
-      // }}
-      // suggestions={null}
       handleDelete={props.handleTagDelete}
       handleAddition={props.handleTagAdd}
-      // handleDrag={null}
     />
       {/* <SearchDropdown title={props.appState.searchMode} setStore={props.setStore} className="search-dropdown" />
     <FormControl type="text"

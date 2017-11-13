@@ -39,6 +39,7 @@ class App extends React.Component {
       data: [],
       searchMode: "Loose",
       username: null,
+      userid: null,
       loggedIn: false,
       userFavorites: [],
       view: 'home',
@@ -109,6 +110,7 @@ class App extends React.Component {
         if(data[0].password === userInput.password) {
           this.setStore({
             username: userInput.username,
+            userid: data[0].id,
             loggedIn: true,
             modalLogin: false
           })
@@ -263,6 +265,10 @@ class App extends React.Component {
     var tags = this.state.tags.slice()
     var tagId = tags.length+1
     tags.push({id:tagId, text:tag})
+    var ingredients = {}
+    ingredients.userName = this.state.username;
+    ingredients.ingredient = tag;
+    $.post('/ingredients', ingredients, (data) => {} );
     console.log('TAGS: ',tags);
     this.setStore({tags:tags})
   }
