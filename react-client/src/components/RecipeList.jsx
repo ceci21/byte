@@ -21,6 +21,6 @@ export default class RecipeList extends React.Component {
   }
 
   render() {
-    return <div className="recipe-list" style={{"padding-bottom": "4em"}}>{this.createRecipeTable()}</div>
+    return <div className="recipe-list" style={{"paddingBottom": "4em"}}>{this.createRecipeTable()}</div>
   }
 }

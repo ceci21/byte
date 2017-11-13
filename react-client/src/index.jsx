@@ -4,8 +4,9 @@ import $ from 'jquery';
 import RecipeList from './components/RecipeList.jsx';
 import Search from './components/Search.jsx';
 import _Test from './_Test.jsx'; /* Feel free to remove me! */
-import {searchYummly} from './lib/searchYummly.js';
-import {searchSpoonacular} from './lib/searchSpoonacular.js';
+import { searchYummly } from './lib/searchYummly.js';
+import { searchSpoonacular } from './lib/searchSpoonacular.js';
+import { spoonacularTrivia } from './lib/spoonacularTrivia.js';
 import SAMPLE_DATA from './data/SAMPLE_DATA.js';
 import { Jumbotron } from 'react-bootstrap';
 import NavBar from './components/NavBar.jsx';
@@ -14,6 +15,7 @@ import LoginSubmissionForm from './components/LoginSubmissionForm.jsx';
 import SignupSubmissionForm from './components/SignupSubmissionForm.jsx';
 import Modal from 'react-modal';
 import LoadingText from './components/LoadingText.jsx';
+import Footer from './components/Footer.jsx';
 
 const SERVER_URL = "http://127.0.0.1:3000";
 
@@ -48,7 +50,8 @@ class App extends React.Component {
       failLogin: '',
       failSignup: '',
       tags: [{id: 1, text: "salt  "}, {id: 2, text:"pepper  "}],
-      loadingText: false
+      loadingText: false,
+      randomTrivia: "Did you know..."
     }
 
     this.setStore = this.setStore.bind(this);
@@ -64,7 +67,18 @@ class App extends React.Component {
     this.closeSignup = this.closeSignup.bind(this);
     this.handleTagAdd = this.handleTagAdd.bind(this);
     this.handleTagDelete = this.handleTagDelete.bind(this);
+    this.randomTrivia = this.randomTrivia.bind(this);
 
+  }
+
+  componentDidMount() {
+    this.randomTrivia();
+  }
+
+  randomTrivia() {
+    spoonacularTrivia((data) => {
+      this.setState({randomTrivia: "Did you know... " + data.text});
+    });
   }
 
   openModal() {
@@ -282,9 +296,9 @@ class App extends React.Component {
       var username = "Not Logged In"
       var userDisplay = (
           <Parallax className="main-card" bgImage="https://i.imgur.com/hpz3tXZ.jpg" strength={400}>
-            <div style={{'display':'flex', 'align-items':'center', 'flex-direction':'column', 'height':'100vh'}}>
+            <div style={{'display':'flex', 'alignItems':'center', 'flexDirection':'column', 'height':'100vh'}}>
               <div style={{'flex':'1'}}/>
-              <div style={{'flex': '1'}}><h1 className="subtitle">Why run to the grocery store when you have all the ingredients you need at home? Here at Byte, we help you see the potential of your pantry.</h1></div>
+              <div style={{'flex': '1'}}><h1 className="subtitle"><div>Why run to the grocery store when you have all the ingredients you need at home? Here at Byte, we help you see the potential of your pantry.</div></h1></div>
               <div style={{'flex':'1'}}/>
             </div>
           </Parallax>
@@ -341,7 +355,9 @@ class App extends React.Component {
     return (
       <div>
         {view}
-      </div>);
+        <Footer trivia={this.state.randomTrivia}/>
+      </div>
+    );
   }
 }
 
