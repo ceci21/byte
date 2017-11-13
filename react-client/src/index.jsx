@@ -4,8 +4,9 @@ import $ from 'jquery';
 import RecipeList from './components/RecipeList.jsx';
 import Search from './components/Search.jsx';
 import _Test from './_Test.jsx'; /* Feel free to remove me! */
-import {searchYummly} from './lib/searchYummly.js';
-import {searchSpoonacular} from './lib/searchSpoonacular.js';
+import { searchYummly } from './lib/searchYummly.js';
+import { searchSpoonacular } from './lib/searchSpoonacular.js';
+import { spoonacularTrivia } from './lib/spoonacularTrivia.js';
 import SAMPLE_DATA from './data/SAMPLE_DATA.js';
 import { Jumbotron } from 'react-bootstrap';
 import NavBar from './components/NavBar.jsx';
@@ -14,6 +15,7 @@ import LoginSubmissionForm from './components/LoginSubmissionForm.jsx';
 import SignupSubmissionForm from './components/SignupSubmissionForm.jsx';
 import Modal from 'react-modal';
 import LoadingText from './components/LoadingText.jsx';
+import Footer from './components/Footer.jsx';
 
 const SERVER_URL = "http://127.0.0.1:3000";
 
@@ -48,7 +50,8 @@ class App extends React.Component {
       failLogin: '',
       failSignup: '',
       tags: [{id: 1, text: "salt  "}, {id: 2, text:"pepper  "}],
-      loadingText: false
+      loadingText: false,
+      randomTrivia: ""
     }
 
     this.setStore = this.setStore.bind(this);
@@ -182,6 +185,12 @@ class App extends React.Component {
     });
   }
 
+  randomTrivia() {
+    spoonacularTrivia((data) => {
+      this.setState({randomTrivia: data});
+    });
+  }
+
   onSearchHandler(e) {
     e.preventDefault();
     console.log('Here is your search query: ', this.state.query);
@@ -295,7 +304,7 @@ class App extends React.Component {
     <div>
       <NavBar setStore={this.setStore} modalSignup={this.modalSignup} modalLogin={this.modalLogin} username={this.state.username} loggedIn={this.state.loggedIn} />
       {userDisplay}
-      <div className="container">
+      <div className="main">
         <Modal
           isOpen={this.state.modalLogin}
           style={customStyles}
@@ -341,7 +350,9 @@ class App extends React.Component {
     return (
       <div>
         {view}
-      </div>);
+        <Footer />
+      </div>
+    );
   }
 }
 
