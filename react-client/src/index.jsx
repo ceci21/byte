@@ -69,10 +69,8 @@ class App extends React.Component {
     this.handleTagDelete = this.handleTagDelete.bind(this);
     this.randomTrivia = this.randomTrivia.bind(this);
 
-  }
-
-  componentDidMount() {
     this.randomTrivia();
+
   }
 
   randomTrivia() {

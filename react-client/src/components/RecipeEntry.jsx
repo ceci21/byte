@@ -39,7 +39,7 @@ const RecipeEntry = (props) => {
         <Card style={{"border":"1px solid #cccccc", "padding": "1em", "margin":"2em 0em 2em 0em", "margin-top": "2em"}}>
           <a href={recipeUrl}><Parallax className="recipe-image img-hover" bgImage={imgLink} strength={100}></Parallax></a>
           <CardBody>
-            <div style={{"display":"flex", "flex-direction":"column", "height": "15em"}}>
+            <div style={{"display":"flex", "flex-direction":"column", "height": "10em"}}>
               <div style={{"flex": "grow"}}>
                 <a href={recipeUrl}>
                   <CardTitle className="recipe-title">{title}</CardTitle>
