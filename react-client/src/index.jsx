@@ -129,7 +129,8 @@ class App extends React.Component {
             var tags = this.state.tags.slice()
             var id = tags.length+1
             data.forEach( (ingredient) => {
-              tags.push({id:tags.length++,text:ingredient.ingredient})
+              console.log();
+              tags.push({id:tags.length++,text:ingredient.ingredient, ingredient_id:ingredient.id})
               // this.handleTagAdd(ingredient.ingredient)
             })
             this.setStore({tags:tags})
@@ -304,7 +305,13 @@ class App extends React.Component {
   handleTagDelete(tag) {
     console.log('TAG to delete: ', tag);
     var tags = this.state.tags.slice()
-    tags.splice(tag,1)
+    var removeIngredient = tags.splice(tag,1)
+    console.log('INGREDIENT TO REMOVE: ', removeIngredient);
+    var stuff = { userId:this.state.userid, ingredientId:removeIngredient[0].ingredient_id,}
+    if(this.state.userid) {
+      console.log('USER LOGGED IN TO REMOVE',stuff);
+      $.post('/removeIngredient', stuff, (data) => {})
+    }
     this.setStore({tags:tags})
   }
 
