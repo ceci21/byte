@@ -72,7 +72,6 @@ class App extends React.Component {
     this.randomTrivia = this.randomTrivia.bind(this);
 
     this.randomTrivia();
-
   }
 
   randomTrivia() {

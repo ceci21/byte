@@ -114,13 +114,7 @@ a:active {
   background-color: #f4f4f4;
   font-family: "Rozha One";
   text-align: center;
-  font-size: 2em;
-}
-
-.recipe-ingredients {
-  overflow-y: auto;
-  min-height: 10em;
-  max-height: 10em;
+  font-size: 1.5em;
 }
 
 .center {
@@ -168,12 +162,12 @@ a:active {
     .recipe-entry {
       width: 100%;
     }
-    .recipe-ingredients {
-
-    }
 
     .subtitle {
       font-size: 2em;
+    }
+    recipe-image {
+      height: 20em;
     }
 
 }

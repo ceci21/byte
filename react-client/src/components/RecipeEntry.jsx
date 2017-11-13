@@ -29,10 +29,6 @@ const RecipeEntry = (props) => {
   recipeUrl = recipeUrl.slice(0, r) + recipeUrl.slice(r + 13);
   console.log("Url string: ", recipeUrl);
 
-  //https://spoonacular.com/red_velvet_cake_balls-66814
-  //https://spoonacular.com/recipeImages/red_velvet_cake_balls-66814.jpg
-
-
   return (
     <div className="recipe-entry">
       <CardGroup>
@@ -45,8 +41,8 @@ const RecipeEntry = (props) => {
                   <CardTitle className="recipe-title">{title}</CardTitle>
                 </a>
               </div>
-              <div style={{"flex": "1", "max-height":"8em", "overflow-y":"hidden"}}>
-              <CardText className="recipe-ingredients" style={{"font-size": "1em", "max-height":"2em"}}>{ingredientsArray.map((element, index) => {
+              <div style={{"flex": "1", "overflow-y":"auto"}}>
+              <CardText className="recipe-ingredients" style={{"font-size": "1em"}}>{ingredientsArray.map((element, index) => {
                 return element;
               })}</CardText>
               </div>
