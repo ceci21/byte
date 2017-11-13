@@ -102,8 +102,17 @@ app.post('/signup', function(req, res) {
     })
 });
 
-app.post('/favorite', function(req, res, next) {
+app.post('/favorites', function(req, res, next) {
   console.log(req.body);
+  console.log('DETECTED IN APP.POST', req.body);
+  Recipes.addRecipe(req.body)
+    .then((data) => {
+      res.send(data).status(201);
+    })
+    .catch((err) => {
+      console.log('Recipe error', err);
+      res.status(500).end()
+    })
 })
 
 app.post('/ingredients', (req, res) => {

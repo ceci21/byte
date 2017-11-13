@@ -22,6 +22,8 @@ CREATE TABLE ingredients (
 CREATE TABLE recipes (
   id INT NOT NULL AUTO_INCREMENT,
   recipe JSON NOT NULL,
+  user_id INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id),
   PRIMARY KEY(id)
 );
 
@@ -60,20 +62,20 @@ INSERT INTO users (name, password)
 VALUES ('Ghostcoder8', 'h@xx');
 
 
-INSERT INTO recipes (recipe)
+INSERT INTO recipes (recipe, user_id)
 VALUES (
   '{
   "name": "soup",
   "ingredients": ["chicken", "broth", "noodles"]
-  }'
+  }', 1
 );
 
-INSERT INTO recipes (recipe)
+INSERT INTO recipes (recipe, user_id)
 VALUES (
   '{
   "name": "chicken",
   "ingredients": ["chicken breast", "oil", "salt"]
-  }'
+  }', 2
 );
 
 INSERT INTO users_recipes (recipe_id, user_id)
