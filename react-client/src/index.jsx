@@ -13,6 +13,7 @@ import { Parallax } from 'react-parallax';
 import LoginSubmissionForm from './components/LoginSubmissionForm.jsx';
 import SignupSubmissionForm from './components/SignupSubmissionForm.jsx';
 import Modal from 'react-modal';
+import LoadingText from './components/LoadingText.jsx';
 
 const SERVER_URL = "http://127.0.0.1:3000";
 
@@ -46,7 +47,8 @@ class App extends React.Component {
       modalSignup: false,
       failLogin: '',
       failSignup: '',
-      tags: [{id: 1, text: "salt  "}, {id: 2, text:"pepper  "}]
+      tags: [{id: 1, text: "salt  "}, {id: 2, text:"pepper  "}],
+      loadingText: false
     }
 
     this.setStore = this.setStore.bind(this);
@@ -156,7 +158,7 @@ class App extends React.Component {
     var options = {};
     options.ingredients = this.state.query.split(", ");
     var queryArray = options.ingredients;
-
+    this.setStore({loadingText: true});
     searchSpoonacular(options, (matches) => {
       console.log("Searching Spoonacular....");
       var data = [];
@@ -170,7 +172,7 @@ class App extends React.Component {
         data = matches;
       }
       console.log('Spoonacular found the following recipes!\n', data);
-      this.setStore({data: data});
+      this.setStore({data: data, loadingText: false});
     });
   }
 
@@ -221,7 +223,7 @@ class App extends React.Component {
     return (
       <div className="container">
         <div style={{"padding": "5em"}}/>
-        <NavBar setStore={this.setStore} username={this.state.username} loggedIn={this.state.loggedIn} />
+        <NavBar setStore={this.setStore} modalSignup={this.modalSignup} modalLogin={this.modalLogin} username={this.state.username} loggedIn={this.state.loggedIn} />
         <RecipeList data={this.state.userFavorites} onFavoriteHandler={this.onFavoriteHandler}/>
       </div>
     );
@@ -311,6 +313,7 @@ class App extends React.Component {
         </Modal>
 
         <Search clickHandler={this.onSearchHandler2} handleTagDelete={this.handleTagDelete} handleTagAdd={this.handleTagAdd} tags={this.state.tags} setStore={this.setStore} appState={this.state}/>
+        {(this.state.loadingText) ? (<LoadingText />) : null}
         <RecipeList data={this.state.data} onFavoriteHandler={this.onFavoriteHandler}/>
       </div>
     </div>);
