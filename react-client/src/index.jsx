@@ -22,7 +22,7 @@ import TiTimes from 'react-icons/lib/ti/times';
 
 const SERVER_URL = "http://127.0.0.1:3000";
 
-
+//NEW VERSION
 const customStyles = {
   content : {
     top                   : '50%',
@@ -103,10 +103,24 @@ class App extends React.Component {
     event.preventDefault();
     var favorites = this.state.userFavorites.slice();
     favorites.push(data);
-    console.log('FAVORITE DATA:', data);
+    console.log('FAVORITE DATA:', typeof data);
+    var favoriteRecipe = data;
     this.setState({
       userFavorites: favorites
     });
+    //UsersRecipes.addFavorites
+    alert('Added to favorites!');
+    console.log('Username is ', this.state.username);
+    var favorite = {
+      recipe: data, 
+      user_id: this.state.userid
+    };
+
+    
+    $.post('/favorites', favorite, (result) => {
+    console.log('POST REQUEST DETECTED');
+    });
+   
   }
 
   onLoginHandler(event) {
