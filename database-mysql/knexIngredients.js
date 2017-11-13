@@ -12,11 +12,11 @@ Ingredients.addIngredient = (data) => {
   // .catch( (err) => {
   //   console.log('Usrs_Ingredients Error: ', err);
   // })
-  return knex('ingredients').insert({ingredient:data.ingredient})
+  return knex('ingredients').insert({ingredient:data.ingredient,user_id:data.userid})
 }
 
 Ingredients.getIngredientByUser = (data) => {
-  console.log('IN INGEDIENTS DB');
+  console.log('IN INGEDIENTS DB', data);
   return knex('ingredients').where({user_id: data.userid}).select('ingredient')
 }
 

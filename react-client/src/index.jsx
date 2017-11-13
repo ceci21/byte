@@ -7,6 +7,7 @@ import _Test from './_Test.jsx'; /* Feel free to remove me! */
 import {searchYummly} from './lib/searchYummly.js';
 import {searchSpoonacular} from './lib/searchSpoonacular.js';
 import SAMPLE_DATA from './data/SAMPLE_DATA.js';
+import DEFAULT_TAGS from './data/DEFAULT_TAGS.js';
 import { Jumbotron } from 'react-bootstrap';
 import NavBar from './components/NavBar.jsx';
 import { Parallax } from 'react-parallax';
@@ -48,7 +49,7 @@ class App extends React.Component {
       modalSignup: false,
       failLogin: '',
       failSignup: '',
-      tags: [{id: 1, text: "salt  "}, {id: 2, text:"pepper  "}],
+      tags: DEFAULT_TAGS,
       loadingText: false
     }
 
@@ -73,11 +74,11 @@ class App extends React.Component {
   }
 
   closeLogin() {
-    this.setState({modalLogin: false})
+    this.setState({modalLogin: false, failLogin: ''})
   }
 
   closeSignup() {
-    this.setState({modalSignup: false})
+    this.setState({modalSignup: false, failSignup: ''})
   }
 
   setStore(state) {
@@ -108,8 +109,15 @@ class App extends React.Component {
       console.log('user data: ', data);
       if(data.length !== 0) {
         if(data[0].password === userInput.password) {
-          $.post('/ingredients', data[0].id, (data) => {
+          $.post('/useringredients', {userid:data[0].id}, (data) => {
             console.log('INGREDIENTS: ', data);
+            var tags = this.state.tags.slice()
+            var id = tags.length+1
+            data.forEach( (ingredient) => {
+              tags.push({id:tags.length++,text:ingredient.ingredient})
+              // this.handleTagAdd(ingredient.ingredient)
+            })
+            this.setStore({tags:tags})
           })
           this.setStore({
             username: userInput.username,
@@ -148,6 +156,8 @@ class App extends React.Component {
       })
       if(!found) {
         $.post('/signup', userInput, (data) => {})
+        this.closeSignup();
+        this.setStore({failLogin: 'Created, please Login', modalLogin: true})
       } else {
         this.setStore({failSignup: 'Username already exists'})
       }
@@ -249,7 +259,8 @@ class App extends React.Component {
     if(this.state.loggedIn) {
       this.setState({
         loggedIn: false,
-        username: null
+        username: null,
+        tags: DEFAULT_TAGS
       })
     } else {
       this.setState({

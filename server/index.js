@@ -62,8 +62,9 @@ app.get('/favorites', function(req, res) {
   UsersRecipes.getFavorites()
 });
 
-app.get('/ingredients', (req, res) => {
-  Ingredients.getIngredientByUser()
+app.post('/useringredients', (req, res) => {
+  console.log('USER INGREDIENT ID: ', req.body);
+  Ingredients.getIngredientByUser(req.body)
   .then( (data) =>{
     console.log('INGREDIENTS ROUTE: ', data);
     res.send(data).status(201)
