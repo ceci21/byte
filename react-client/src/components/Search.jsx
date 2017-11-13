@@ -17,7 +17,7 @@ const Search = (props) => (
       handleAddition={props.handleTagAdd}
       // handleDrag={null}
     />
-      <SearchDropdown title={props.appState.searchMode} setStore={props.setStore} className="search-dropdown" />
+      {/* <SearchDropdown title={props.appState.searchMode} setStore={props.setStore} className="search-dropdown" />
     <FormControl type="text"
       className="search-input"
       type="text" onChange={ (e) => {
@@ -29,7 +29,7 @@ const Search = (props) => (
           props.clickHandler(e);
         }
       }}
-    />
+    /> */}
     <Button className="search-button" onClick={props.clickHandler}>Search</Button>
    </form>
   </div>

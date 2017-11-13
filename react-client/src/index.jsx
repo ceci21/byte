@@ -156,7 +156,13 @@ class App extends React.Component {
   onSearchHandler2(e) {
     e.preventDefault();
     var options = {};
-    options.ingredients = this.state.query.split(", ");
+    // options.ingredients = this.state.query.split(", ");
+    var tags = this.state.tags.slice()
+    tags = tags.map( (tag) => {
+      return tag.text
+    })
+    options.ingredients = tags;
+    console.log('TAGS: ', tags);
     var queryArray = options.ingredients;
     this.setStore({loadingText: true});
     searchSpoonacular(options, (matches) => {
@@ -287,7 +293,7 @@ class App extends React.Component {
 
     return (
     <div>
-      <NavBar setStore={this.setStore} modalSignup={this.modalSignup} modalLogin={this.modalLogin} username={username} loggedIn={this.state.loggedIn} />
+      <NavBar setStore={this.setStore} modalSignup={this.modalSignup} modalLogin={this.modalLogin} username={this.state.username} loggedIn={this.state.loggedIn} />
       {userDisplay}
       <div className="container">
         <Modal
