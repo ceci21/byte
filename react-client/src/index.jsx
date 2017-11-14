@@ -101,15 +101,15 @@ class App extends React.Component {
     alert('Added to favorites!');
     console.log('Username is ', this.state.username);
     var favorite = {
-      recipe: data, 
+      recipe: data,
       user_id: this.state.userid
     };
 
-    
+
     $.post('/favorites', favorite, (result) => {
     console.log('POST REQUEST DETECTED');
     });
-   
+
   }
 
   onLoginHandler(event) {
