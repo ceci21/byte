@@ -60,9 +60,20 @@ app.get('/users_recipes', function(req, res) {
   })
 });
 
-app.get('/favorites', function(req, res) {
+app.post('/userfavorites', function(req, res) {
   // Get users favorites
-  UsersRecipes.getFavorites()
+  //UsersRecipes.getFavorites()
+  console.log('FAVORITES PAGE GET REQUEST', req.body.user_id);
+  Recipes.getRecipes(req.body.user_id)
+    .then((data) => {//data is an array of users and their passwords
+      console.log('We getting anything now? ', data);
+      res.json(data)
+    })
+    .catch((err) => {
+      console.log('Something went wrong while retrieving recipes: ', err)
+      res.status(500).end()
+    })
+
 });
 
 app.post('/useringredients', (req, res) => {
