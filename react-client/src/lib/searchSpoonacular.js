@@ -1,6 +1,5 @@
 import $ from 'jquery';
 
-
 var searchSpoonacular = function(options, callback) {
   var query = options.ingredients.toString();
   $.ajax({
@@ -13,7 +12,9 @@ var searchSpoonacular = function(options, callback) {
       number: 100,
       onlyOpenLicense: false
     },
-    headers: {'X-Mashape-Key': 'DbYLQPD1ZGmshuSTypfqnBmQ3aZfp1uieQ6jsn4a0BqErZxQmz'},
+    headers: {
+      'X-Mashape-Key': process.env.REACT_APP_SPOONACULAR_API_KEY
+    },
     success: function(data) {
       callback(data);
     },

@@ -9,6 +9,7 @@
 1. [Requirements](#requirements)
 1. [Development](#development)
     1. [Installing Dependencies](#installing-dependencies)
+    1. [Environment Setup](#environment-setup)
     1. [Tasks](#tasks)
 1. [Team](#team)
 1. [Contributing](#contributing)
@@ -36,6 +37,23 @@ From within the root directory:
 ```sh
 npm install
 ```
+
+### Environment Setup
+
+1. Copy `.env.example` to `.env`:
+```sh
+cp .env.example .env
+```
+
+2. Update the `.env` file with your configuration:
+- Database credentials
+- Session secret (can be any secure random string)
+- API keys for Spoonacular and Yummly
+
+For security:
+- Never commit the `.env` file
+- Never share API keys or credentials
+- Rotate secrets if they are ever exposed
 
 ### Running webpack and server
 

@@ -1,11 +1,12 @@
 import $ from 'jquery';
-import Keys from '../config/spoonacular.js';
 
 var spoonacularTrivia = function(callback) {
     $.ajax({
        url: "https://spoonacular-recipe-food-nutrition-v1.p.mashape.com/food/trivia/random",
        type: "GET",
-       headers: {'X-Mashape-Key': 'DbYLQPD1ZGmshuSTypfqnBmQ3aZfp1uieQ6jsn4a0BqErZxQmz'},
+       headers: {
+         'X-Mashape-Key': process.env.REACT_APP_SPOONACULAR_API_KEY
+       },
        success: function(data) {
          callback(data);
        },
