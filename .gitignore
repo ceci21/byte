@@ -1,3 +1,8 @@
+# Environment variables
+.env
+.env.*
+!.env.example
+
 ### node etc ###
 
 # Logs
@@ -32,4 +37,3 @@ react-client/src/config/spoonacular.js
 node_modules/
 bower_components/
 react-client/dist/bundle.js
-.env

@@ -2,6 +2,7 @@ var express = require('express');
 var session = require('express-session');
 var bodyParser = require('body-parser');
 var bcrypt = require('bcrypt');
+require('dotenv').config();
 
 var Recipes = require('../database-mysql/knexRecipes.js')
 var Users = require('../database-mysql/knexUsers.js')
@@ -16,7 +17,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(__dirname + '/../react-client/dist'));
 
 app.use(session({
-  secret: 'keyboard cat'
+  secret: process.env.SESSION_SECRET || 'dev_secret_key',
+  resave: false,
+  saveUninitialized: true
 }));
 
 app.get('/', function(req, res) {
